@@ -11461,12 +11461,12 @@ html {
     font-size: 1.5rem;
   }
 }
-#portfolio {
+#games {
   padding-top: 8.5rem;
   padding-bottom: 2rem;
   margin-bottom: 0.5rem;
 }
-.portfolio .portfolio-item {
+.games .games-item {
   cursor: pointer;
   position: relative;
   display: block;
@@ -11475,7 +11475,7 @@ html {
   overflow: hidden;
   margin-bottom: 1rem;
 }
-.portfolio .portfolio-item .portfolio-item-caption {
+.games .games-item .games-item-caption {
   position: absolute;
   top: 0;
   left: 0;
@@ -11483,24 +11483,24 @@ html {
   opacity: 0;
   background-color: rgba(26, 188, 156, 0.9);
 }
-.portfolio .portfolio-item .portfolio-item-caption:hover {
+.games .games-item .games-item-caption:hover {
   opacity: 1;
 }
-.portfolio .portfolio-item .portfolio-item-caption .portfolio-item-caption-content {
+.games .games-item .games-item-caption .games-item-caption-content {
   font-size: 1.5rem;
 }
 
-.portfolio-modal .btn-close {
+.games-modal .btn-close {
   color: #1abc9c;
   font-size: 2rem;
   padding: 1rem;
 }
-.portfolio-modal .portfolio-modal-title {
+.games-modal .games-modal-title {
   font-size: 2.25rem;
   line-height: 2rem;
 }
 @media (min-width: 992px) {
-  .portfolio-modal .portfolio-modal-title {
+  .games-modal .games-modal-title {
     font-size: 3rem;
     line-height: 2.5rem;
   }
@@ -11509,6 +11509,8 @@ html {
 #about {
   padding-top: 3rem;
   padding-bottom: 3rem;
+  background-color: #3e92d1 !important;
+  border-radius: 3px;
 }
 
 #contact {
@@ -11532,7 +11534,14 @@ html {
   font-weight: 300;
 }
 
-.portfolio-item-text-hidden {
+.games-item-text-hidden {
   font-size: 2.5rem;
   font-weight: bold;
+}
+
+.games-item-text-hidden:hover, 
+.games-item-text-hidden:link, 
+.games-item-text-hidden:visited,
+.games-item-text-hidden:active {
+  text-decoration: none;
 }

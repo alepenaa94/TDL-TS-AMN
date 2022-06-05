@@ -1,5 +1,5 @@
 // @ts-ignore
-import Portfolio from './Portfolio.tsx';
+import Games from './Games.tsx';
 // @ts-ignore
 import About from './About.tsx';
 // @ts-ignore
@@ -9,7 +9,7 @@ export default function Main() {
     return (
         <div className="container">
             
-            <Portfolio />
+            <Games />
             <About />
             <Contact />
 
