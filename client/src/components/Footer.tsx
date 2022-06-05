@@ -6,7 +6,7 @@ export default function Footer() {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12 mb-12 mb-lg-12">
-                        <small>FIUBA 2022 · NEREA, OTEGUI, PEÑA</small>
+                        <small className="footer-fiuba">FIUBA 2022 · NEREA, OTEGUI, PEÑA</small>
                     </div>
                 </div>
             </div>

@@ -489,8 +489,9 @@ progress {
 }
 
 .lead {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 300;
+  
 }
 
 .display-1 {
@@ -11298,9 +11299,11 @@ html {
 .page-section .page-section-heading {
   font-size: 2.25rem;
   line-height: 2rem;
+  padding-bottom: 2.5rem;
 }
 @media (min-width: 992px) {
   .page-section .page-section-heading {
+    padding-top: 0rem;
     font-size: 3rem;
     line-height: 2.5rem;
   }
@@ -11458,6 +11461,11 @@ html {
     font-size: 1.5rem;
   }
 }
+#portfolio {
+  padding-top: 8.5rem;
+  padding-bottom: 2rem;
+  margin-bottom: 0.5rem;
+}
 .portfolio .portfolio-item {
   cursor: pointer;
   position: relative;
@@ -11465,6 +11473,7 @@ html {
   max-width: 25rem;
   border-radius: 0.5rem;
   overflow: hidden;
+  margin-bottom: 1rem;
 }
 .portfolio .portfolio-item .portfolio-item-caption {
   position: absolute;
@@ -11497,6 +11506,16 @@ html {
   }
 }
 
+#about {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+#contact {
+  padding-top: 4rem;
+  padding-bottom: 5rem;
+}
+
 .footer {
   padding-top: 5rem;
   padding-bottom: 5rem;
@@ -11506,4 +11525,14 @@ html {
 
 .copyright {
   background-color: #1a252f;
+}
+
+.footer-fiuba {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.portfolio-item-text-hidden {
+  font-size: 2.5rem;
+  font-weight: bold;
 }
