@@ -4,12 +4,16 @@ import Games from './../components/Games.tsx';
 import About from './../components/About.tsx';
 
 export default function Home() {
+
     return (
+
         <div className="container">
             
             <Games />
             <About />
 
-        </div>        
+        </div> 
+
     )
+    
 }

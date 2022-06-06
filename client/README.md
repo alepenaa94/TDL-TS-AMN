@@ -1,9 +1,7 @@
-# Portfolio
+# Para levantar el server
 
-#
+# npm start
 
-# basado en:
+# Para hacer un build
 
-#
-
-# https://startbootstrap.github.io/startbootstrap-freelancer/
+# npm start build

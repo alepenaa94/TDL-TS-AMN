@@ -4,7 +4,11 @@ export default function Error404() {
     
     return (
 
-        <section id="error-404"> Error 404. Página no encontrada. </section>
+        <div className="container">
+            <div className="row justify-content-center">
+                <section id="error-404" className='amn-page text-center'> Error 404. Página no encontrada. </section>
+            </div>
+        </div>
 
     )
 

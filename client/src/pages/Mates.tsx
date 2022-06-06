@@ -4,7 +4,11 @@ export default function Mates() {
     
     return (
 
-        <section id="mates"> ESTE ES EL JUEGO DE LAS MATEMATICAS. </section>
+        <div className="container">
+            <div className="row justify-content-center">
+                <section id="mates" className='amn-page text-center'> ESTE ES EL JUEGO DE LAS MATEMÁTICAS. </section>
+            </div>
+        </div>
 
     )
 
