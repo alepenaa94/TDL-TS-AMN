@@ -11506,6 +11506,12 @@ html {
   }
 }
 
+@media (max-width: 992px) {
+  .lead {
+    text-align: center;
+  }
+}
+
 #about {
   padding-top: 3rem;
   padding-bottom: 3rem;
@@ -11544,4 +11550,8 @@ html {
 .games-item-text-hidden:visited,
 .games-item-text-hidden:active {
   text-decoration: none;
+}
+
+.fa-bars {
+  margin-left: 3px;
 }

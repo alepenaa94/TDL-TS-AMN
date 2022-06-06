@@ -20,7 +20,7 @@ export default function Games() {
                     <div className="col-md-12 col-lg-4 mb-12">
                         <div className="games-item mx-auto" data-bs-toggle="modal" data-bs-target="#gamesModal2">
                             <div className="games-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <a href="grrr.html" className="text-center text-white games-item-text-hidden">Grrrrr</a>
+                                <a href="grrr.html" className="text-center text-white games-item-text-hidden">Grrr</a>
                             </div>
                             <img className="img-fluid" src="img/games/game.png" alt="..." />
                         </div>

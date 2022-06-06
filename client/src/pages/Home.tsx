@@ -1,11 +1,11 @@
 // @ts-ignore
-import Games from './Games.tsx';
+import Games from './../components/Games.tsx';
 // @ts-ignore
-import About from './About.tsx';
+import About from './../components/About.tsx';
 // @ts-ignore
-import Contact from './Contact.tsx';
+import Contact from './../components/Contact.tsx';
 
-export default function Main() {
+export default function Home() {
     return (
         <div className="container">
             
