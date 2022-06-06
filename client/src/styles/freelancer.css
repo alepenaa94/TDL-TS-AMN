@@ -491,6 +491,8 @@ progress {
 .lead {
   font-size: 1.5rem;
   font-weight: 300;
+  color: #000000;
+  text-align: justify;
   
 }
 
@@ -11474,6 +11476,7 @@ html {
   border-radius: 0.5rem;
   overflow: hidden;
   margin-bottom: 1rem;
+  display: block;
 }
 .games .games-item .games-item-caption {
   position: absolute;
@@ -11482,6 +11485,7 @@ html {
   transition: all 0.2s ease-in-out;
   opacity: 0;
   background-color: rgba(26, 188, 156, 0.9);
+  display: block;
 }
 .games .games-item .games-item-caption:hover {
   opacity: 1;
@@ -11520,8 +11524,8 @@ html {
 }
 
 #contact {
-  padding-top: 4rem;
-  padding-bottom: 5rem;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
 }
 
 .footer {
@@ -11543,6 +11547,8 @@ html {
 .games-item-text-hidden {
   font-size: 2.5rem;
   font-weight: bold;
+  display: block;
+  padding: 7rem 10rem;
 }
 
 .games-item-text-hidden:hover, 

@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom'
+
 export default function Games() {
     return (
 
@@ -11,7 +13,7 @@ export default function Games() {
                     <div className="col-md-12 col-lg-4 mb-12">
                         <div className="games-item mx-auto" data-bs-toggle="modal" data-bs-target="#gamesModal1">
                             <div className="games-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <a href="ahorcado.html" className="text-center text-white games-item-text-hidden">Ahorcado</a>
+                                <Link className="text-center text-white games-item-text-hidden" to="/ahorcado">Ahorcado</Link>
                             </div>
                             <img className="img-fluid" src="img/games/cake.png" alt="..." />
                         </div>
@@ -20,7 +22,7 @@ export default function Games() {
                     <div className="col-md-12 col-lg-4 mb-12">
                         <div className="games-item mx-auto" data-bs-toggle="modal" data-bs-target="#gamesModal2">
                             <div className="games-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <a href="grrr.html" className="text-center text-white games-item-text-hidden">Grrr</a>
+                                <Link className="text-center text-white games-item-text-hidden" to="/grrr">Grrr</Link>
                             </div>
                             <img className="img-fluid" src="img/games/game.png" alt="..." />
                         </div>
@@ -29,7 +31,7 @@ export default function Games() {
                     <div className="col-md-12 col-lg-4 mb-12">
                         <div className="games-item mx-auto" data-bs-toggle="modal" data-bs-target="#gamesModal3">
                             <div className="games-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <a href="mates.html" className="text-center text-white games-item-text-hidden">¿Qué tal las matemáticas?</a>
+                                <Link className="text-center text-white games-item-text-hidden" to="/mates">¿Qué tal las matemáticas?</Link>
                             </div>                           
                             <img className="img-fluid" src="img/games/submarine.png" alt="..." />
                         </div>

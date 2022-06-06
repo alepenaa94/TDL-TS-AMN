@@ -5,6 +5,6 @@ import Navbar from "./Navbar.tsx";
 
 export default function Header() {
     return (
-    <Navbar />
+        <Navbar />
     )
 }
