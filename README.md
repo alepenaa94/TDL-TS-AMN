@@ -10,12 +10,10 @@
 
 # USO DEL PROGRAMA:
 
-#
+# · Levantar client:
 
-# 1. client: npm start
+# 0. npm install
 
-# 2.
+# 1. npm start
 
-# Continuar https://www.youtube.com/watch?v=bMknfKXIFA8&t=1984s
-
-# desde 2:00:00
+# \*2 npm start build (en caso de hacer un build)
