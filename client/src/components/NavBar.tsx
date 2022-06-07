@@ -13,6 +13,7 @@ export default function NavBar() {
                 <NavDropdown.Item className="nav-item mx-0 mx-lg-1"><Link className="nav-link py-3 px-0 px-lg-3 rounded" to="/ahorcado">Ahorcado</Link></NavDropdown.Item>
                 <NavDropdown.Item className="nav-item mx-0 mx-lg-1"><Link className="nav-link py-3 px-0 px-lg-3 rounded" to="/grrr">Grrr</Link></NavDropdown.Item>
                 <NavDropdown.Item className="nav-item mx-0 mx-lg-1"><Link className="nav-link py-3 px-0 px-lg-3 rounded" to="/mates">Mates</Link></NavDropdown.Item>
+                <NavDropdown.Item className="nav-item mx-0 mx-lg-1"><Link className="nav-link py-3 px-0 px-lg-3 rounded" to="/escribo">Escribo</Link></NavDropdown.Item>
             </Nav>
         </Navbar.Collapse>
         </Container>
