@@ -1,10 +1,10 @@
 import React from "react";
 
 // @ts-ignore
-import Navbar from "./Navbar.tsx";
+import NavBar from "./NavBar.tsx";
 
 export default function Header() {
     return (
-        <Navbar />
+        <NavBar />
     )
 }
