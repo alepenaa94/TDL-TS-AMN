@@ -6,13 +6,16 @@
 	},
 	"item": [
 		{
-			"name": "Add Name to Player",
+			"name": "Consultar letra perteneciente a palabra",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"id\": 16,\n  \"name\": \"María\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,7 +23,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9000/v0/players/addNameToPlayer",
+					"raw": "http://localhost:9000/v0/hangman/24/p",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -28,21 +31,22 @@
 					"port": "9000",
 					"path": [
 						"v0",
-						"players",
-						"addNameToPlayer"
+						"hangman",
+						"24",
+						"p"
 					]
 				},
-				"description": "Pasandole el ID al crear el usuario cuando se selecciona un juego, se actualiza el nombre. \nSe utiliza cuando el usuario pone su nombre al inicio del juego"
+				"description": "Pasandole el ID de usuario y la letra , te dice en qué posiciones se encuentra"
 			},
 			"response": []
 		},
 		{
-			"name": "Get Players",
+			"name": "Get word",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9000/v0/players",
+					"raw": "http://localhost:9000/v0/hangman/24",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -50,10 +54,11 @@
 					"port": "9000",
 					"path": [
 						"v0",
-						"players"
+						"hangman",
+						"24"
 					]
 				},
-				"description": "Se obtiene listado de jugadores con su puntaje"
+				"description": "Obtiene el id y la cantidad de letras de una palabra. Ese ID servirá para identificarla luego.\nSe debe mandar el id del usuario en el get."
 			},
 			"response": []
 		},
@@ -106,6 +111,40 @@
 					]
 				},
 				"description": "Crea un usuario nuevo asociado al juego en primera instancia.\nLuego se manda id_player y id_game si elige otro juego. \nSi elige el mismo juego, se resetean las vidas."
+			},
+			"response": []
+		},
+		{
+			"name": "Get location of letter",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/hangman/24/o",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"hangman",
+						"24",
+						"o"
+					]
+				}
 			},
 			"response": []
 		}

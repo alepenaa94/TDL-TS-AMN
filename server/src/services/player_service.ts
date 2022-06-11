@@ -55,7 +55,8 @@ export class PlayerService extends CommonService {
 
         // insert id_game and id_player into Gameinplay table.
         const sql_gameinplay =
-          'INSERT INTO gameinplay(id_player, id_game, available_life) VALUES ($1, $2, 3) returning id_player'
+          'INSERT INTO gameinplay(id_player, id_game, available_life) VALUES ($1, $2, 3) ' +
+          'ON CONFLICT (id_player, id_game) DO UPDATE SET available_life = 3 returning id_player, id_game'
         const gameinplayParams = [userResult.rows[0].id, id_game]
         const gameinplayResult = await pool.aquery(this.user_current, sql_gameinplay, gameinplayParams)
 
