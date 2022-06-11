@@ -19,21 +19,34 @@ import Footer from "./components/Footer.tsx";
 
 class App extends React.Component {
 
-  private ahorcado_id:number;
-  private grrr_id:number;
-  private mates_id:number;
-  private escribo_id:number;
   
   constructor(props:any) {
     super(props);
+    
+    this.state = {
+      ahorcado_id: -1,
+      grrr_id: -1,
+      mates_id: -1,
+      escribo_id: -1
+    };
 
+    this.getGameId = this.getGameId.bind(this);
+  }
+
+  componentDidMount(): void {
     fetch("https://gorest.co.in/public/v2/posts/")
     .then(response => response.json())
     .then(data => {
       console.log(data);
       // aca deberiamos setear los id de los juegos
-      this.ahorcado_id = 999;
+      this.getGameId("hola");
     });
+    
+  }
+
+  getGameId(e) {
+    console.log(e);
+    this.setState({ahorcado_id:3});
   }
   
 
@@ -45,7 +58,7 @@ class App extends React.Component {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/ahorcado" element={<Ahorcado id={this.ahorcado_id}/>} />
+            <Route path="/ahorcado" element={<Ahorcado game_id={this.state.ahorcado_id}/>} />
             <Route path="/grrr" element={<Grrr />} />
             <Route path="/mates" element={<Mates />} />
             <Route path="/escribo" element={<Escribo />} />
