@@ -10,16 +10,25 @@ import PlayerValidator from '../../validators/player'
 
 const router = express.Router()
 
-//add player
+//add name player
 router.post(
-  '/add',
+  '/addNameToPlayer',
   (req, res, next) => {
     Schema.handle(req, res, next, PlayerValidator.player())
   },
-  wrapper(PlayerController.addPlayer),
+  wrapper(PlayerController.addNameToPlayer),
 )
 
 //get players
 router.get('', wrapper(PlayerController.getPlayers))
+
+//add player + game
+router.post(
+  '/addPlayerToGame',
+  (req, res, next) => {
+    Schema.handle(req, res, next, PlayerValidator.addPlayerToGame())
+  },
+  wrapper(PlayerController.addPlayerToGame),
+)
 
 export default router

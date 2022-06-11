@@ -1,6 +1,7 @@
 CREATE TABLE public.player(
-	id integer NOT NULL,
-	name character varying NOT NULL,
+	id integer NOT NULL DEFAULT nextval('player_id_seq'::regclass),
+	score integer NULL,
+	name character varying NULL,
 	CONSTRAINT player_pkey PRIMARY KEY (id) 
 	)
 	
