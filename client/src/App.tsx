@@ -17,21 +17,46 @@ import Error404 from "./pages/Error404.tsx";
 // @ts-ignore
 import Footer from "./components/Footer.tsx";
 
-export default function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/ahorcado" element={<Ahorcado />} />
-          <Route path="/grrr" element={<Grrr />} />
-          <Route path="/mates" element={<Mates />} />
-          <Route path="/escribo" element={<Escribo />} />
-          <Route path="*" element={<Error404 />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </div>
-  );
+class App extends React.Component {
+
+  private ahorcado_id:number;
+  private grrr_id:number;
+  private mates_id:number;
+  private escribo_id:number;
+  
+  constructor(props:any) {
+    super(props);
+
+    fetch("https://gorest.co.in/public/v2/posts/")
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      // aca deberiamos setear los id de los juegos
+      this.ahorcado_id = 999;
+    });
+  }
+  
+
+  
+  render(): React.ReactNode {
+    return (
+      <div className="App">
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/ahorcado" element={<Ahorcado id={this.ahorcado_id}/>} />
+            <Route path="/grrr" element={<Grrr />} />
+            <Route path="/mates" element={<Mates />} />
+            <Route path="/escribo" element={<Escribo />} />
+            <Route path="*" element={<Error404 />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </div>
+    );
+  }
 }
+
+
+export default App;

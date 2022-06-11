@@ -17,6 +17,7 @@ class Ahorcado extends React.Component {
         this.pal_ofsc = React.createRef();
         this.input_area = React.createRef();
         this.figura = React.createRef();
+        console.log(props);
     }
 
 
