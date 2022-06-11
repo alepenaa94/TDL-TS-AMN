@@ -1,0 +1,16 @@
+INSERT INTO public.words (id, name)
+    VALUES (1,'COCODRILO'),
+    (2,'MURCIELAGO'),
+    (3,'CIELO'),
+    (4,'AGUA'),
+    (5,'HELADO'),
+    (6,'PESADILLA'),
+    (7,'ARMARIO'),
+    (8,'COMPUTADORA'),
+    (9,'CARRETERA'),
+    (10,'SOL'),
+    (11,'MAESTRO'),
+    (12,'BANANA'),
+    (13,'JARDIN'),
+    (14,'SILLA'),
+     (15,'FIDEO');

@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "f3a4f797-4a35-43f2-aed7-3c54d35a0b93",
+		"name": "TDL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Consultar letra perteneciente a palabra",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/hangman/24/p",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"hangman",
+						"24",
+						"p"
+					]
+				},
+				"description": "Pasandole el ID de usuario y la letra , te dice en qué posiciones se encuentra"
+			},
+			"response": []
+		},
+		{
+			"name": "Get word",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/v0/hangman/24",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"hangman",
+						"24"
+					]
+				},
+				"description": "Obtiene el id y la cantidad de letras de una palabra. Ese ID servirá para identificarla luego.\nSe debe mandar el id del usuario en el get."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Games",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/v0/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"games"
+					]
+				},
+				"description": "Se obtienen todos los juegos disponibles"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Player to Game",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id_game\": 1,\n  \"id_player\": 8\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/players/addPlayerToGame",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"players",
+						"addPlayerToGame"
+					]
+				},
+				"description": "Crea un usuario nuevo asociado al juego en primera instancia.\nLuego se manda id_player y id_game si elige otro juego. \nSi elige el mismo juego, se resetean las vidas."
+			},
+			"response": []
+		},
+		{
+			"name": "Get location of letter",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/hangman/24/o",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"hangman",
+						"24",
+						"o"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

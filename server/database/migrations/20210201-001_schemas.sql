@@ -40,17 +40,6 @@ WITH (OIDS=FALSE);
 
 ALTER TABLE public.error_types OWNER TO postgres;
 
-/*==============================================================*/
-/* TABLE: games                                                 */
-/*==============================================================*/
-CREATE TABLE IF NOT EXISTS public.games(
-	 id integer NOT NULL,
-        name VARCHAR,
-        CONSTRAINT games_pkey PRIMARY KEY (id)
-);
-
-ALTER TABLE public.games OWNER TO postgres;
-
 /* ============================================================================================== */
 /* DATABASE SCHEMA - END                                                                          */
 /* ============================================================================================== */
