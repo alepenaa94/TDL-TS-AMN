@@ -12,6 +12,8 @@ class Ahorcado extends React.Component {
     private input_area:any = null;
     private figura:any = null;
 
+    private idx_temp:number = 0;
+
     constructor(props:any){
         super(props);
         this.pal_ofsc = React.createRef();
@@ -19,6 +21,32 @@ class Ahorcado extends React.Component {
         this.figura = React.createRef();
         console.log(props);
     }
+
+
+    UNSAFE_componentWillUpdate() {
+        const handleKeydown = event => {
+            const { key, keyCode } = event;
+            if ( keyCode >= 65 && keyCode <= 90) {
+              let mi_letter:string = key.toLowerCase();
+              
+              console.log(mi_letter);
+
+              this.pal_ofsc.current.setLetter(mi_letter,this.idx_temp);
+
+              if (this.idx_temp == 4){
+                  this.idx_temp = 0;
+  
+                  this.funcion_error();
+  
+              } else {
+                  this.idx_temp++;
+              }
+
+            }
+        }
+        window.addEventListener('keydown', handleKeydown);
+    }
+    
 
 
 
@@ -29,7 +57,7 @@ class Ahorcado extends React.Component {
     }
 
     
-    private idx_temp:number = 0;
+    
 
     clickFn() {
 
@@ -69,13 +97,7 @@ class Ahorcado extends React.Component {
                             
                             <PalabraOfuscada ref={this.pal_ofsc} />
                             
-                            <div>
-                                <CInput ref={this.input_area} />
-                                <button onClick={e=>this.clickFn()}
-                                        className='btn-group button mt-6'>
-                                        Validar letra
-                                </button>
-                            </div>
+                            
                             
                         </div>
                         

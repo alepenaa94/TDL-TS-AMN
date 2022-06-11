@@ -8,7 +8,7 @@ class PalabraOfuscada extends React.Component {
         super(props);
     }
 
-    public setLetter(letter:string , idx:number ) {        
+    public setLetter(letter:string , idx:number ):void {        
         let letter_span = document.getElementById('letter_'+idx);
         if (letter_span) {
             letter_span.innerHTML = letter;
