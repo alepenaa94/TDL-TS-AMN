@@ -20,14 +20,15 @@ export class PlayerService extends CommonService {
 
     try {
       await Helper.beginTransaction(pool, this.user_current)
+
       const player_columns = `name = '${name}'`
-
       const player_sql = `UPDATE player SET ${player_columns} WHERE id = '${id}'`
-
       const res = await pool.aquery(this.user_current, player_sql, [])
+
       if (!res.rowCount) throw { message: 'Player does not exist', status: 404 }
 
       await Helper.commitTransaction(pool, this.user_current)
+
       return { success: true, data: { message: 'Player updated' } }
     } catch (error) {
       logger.error(`Error: ${error}`)
@@ -72,6 +73,7 @@ export class PlayerService extends CommonService {
         logger.error(`Error: ${error}`)
         return { success: false, data: { message: error.detail || error } }
       }
+
       // si el id_player viene completo, se deberá actualizará / creará entrada en gameinplay
     } else {
       console.log(id_player)
@@ -102,7 +104,7 @@ export class PlayerService extends CommonService {
 
   //Se obtienen todos los jugadores con su puntaje
   public async getAllPlayers(): Promise<any> {
-    return await this.getRows('select id, name, score from player', [])
+    return await this.getRows('SELECT id, name, score FROM player', [])
   }
 }
 

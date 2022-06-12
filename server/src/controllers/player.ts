@@ -6,7 +6,6 @@ import { PlayerService } from '../services'
 
 export class PlayerController {
   public static async addNameToPlayer(req: CUserAuthInfoRequest, res: Response) {
-    console.log(req.body)
     const objSysAdmin = req.cUser ? req.cUser : Helper.defaultUser()
     const { id, name } = req.body
     const playerService: PlayerService = new PlayerService(objSysAdmin)

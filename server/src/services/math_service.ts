@@ -5,7 +5,7 @@ import PGPool from '../db_pool/pg_pool'
 import Helper from '../db_pool/helper'
 import { logger } from '../providers/logger'
 
-export class WordService extends CommonService {
+export class MathService extends CommonService {
   expReq?: any
 
   expRes?: any
@@ -14,46 +14,38 @@ export class WordService extends CommonService {
     super(_user)
   }
 
-  // Consulta letra correcta
-  public async wordIsOK(id_player: number, letter: string, pool?: PGPool): Promise<any> {
+  // A partir de la operación y el id del jugador, consulta si la operación es correcta
+  public async opIsOK(id_player: number, operador: string, pool?: PGPool): Promise<any> {
     try {
       const playerExists = await this.getRows(
-        `SELECT id_player, id_game, available_life FROM gameinplay WHERE id_player = '${id_player}' AND id_game = 3`,
+        `SELECT id_player, id_game, available_life FROM gameinplay WHERE id_player = '${id_player}' AND id_game = 2`,
       )
 
       if (!playerExists.success) throw { message: 'Player does not exist', status: 404 }
       if (playerExists.data.result[0].available_life <= 0) throw { message: 'You are dead', status: 404 }
 
-      const wordplayer_sql = `SELECT id_word, retry FROM wordsplayer WHERE id_player = '${id_player}'`
-      const wordplayerResult = await this.getRows(wordplayer_sql, [])
+      const mathplayer_sql = `SELECT id_math FROM mathplayer WHERE id_player = '${id_player}'`
+      const mathplayerResult = await this.getRows(mathplayer_sql, [])
 
       //En caso que no se encuentre
-      if (!wordplayerResult.success) throw { message: 'Word does not exist', status: 404 }
+      if (!mathplayerResult.success) throw { message: 'Math does not exist', status: 404 }
 
-      const word_sql = `SELECT id, name FROM words WHERE id = '${wordplayerResult.data.result[0].id_word}'`
-      const wordResult = await this.getRows(word_sql, [])
+      const math_sql = `SELECT id, operador FROM math WHERE id = '${mathplayerResult.data.result[0].id_math}'`
+      const mathResult = await this.getRows(math_sql, [])
 
       //En caso que no se encuentre
-      if (!wordResult.success) throw { message: 'Word does not exist', status: 404 }
+      if (!mathResult.success) throw { message: 'Operation ID does not exist', status: 404 }
 
-      //Si la letra es correcta, se devolverá la misma cantidad de vidas que tenía y las ubicaciones
-      const word = wordResult.data.result[0].name
-      if (word.includes(letter.toUpperCase())) {
-        const positions = []
-        let i = -1
-        while ((i = word.indexOf(letter.toUpperCase(), i + 1)) >= 0) {
-          positions.push(i + 1)
-        }
+      //Si el operando es correcto, se devolverá la misma cantidad de vidas que tenía
+      if (operador === mathResult.data.result[0].operador) {
         return {
           success: true,
           data: {
-            location: positions,
-            available_life: playerExists.data.result[0].available_life
+            available_life: playerExists.data.result[0].available_life,
           },
         }
       } else {
         //Se actualiza la tabla de juego y vidas
-
         let pooldefinedLocally = false
         // pool is not supplied, create one AND start transaction
         if (pool === undefined) {
@@ -63,8 +55,7 @@ export class WordService extends CommonService {
           await Helper.beginTransaction(pool, this.user_current)
         }
         const av_life = playerExists.data.result[0].available_life - 1
-        console.log(av_life)
-        const sql_gameinplay = 'UPDATE gameinplay SET available_life = $2 WHERE id_player = $1 AND id_game = 3'
+        const sql_gameinplay = 'UPDATE gameinplay SET available_life = $2 WHERE id_player = $1 AND id_game = 2'
         const updatedGameInPlay = await pool.aquery(this.user_current, sql_gameinplay, [id_player, av_life])
         if (updatedGameInPlay.rowCount <= 0) {
           throw { message: 'Error al actualizar las vidas', status: 400 }
@@ -72,7 +63,7 @@ export class WordService extends CommonService {
         // commit if there is a transaction
         if (pooldefinedLocally) await Helper.commitTransaction(pool, this.user_current)
         throw {
-          message: 'Letra no es correcta',
+          message: 'Operación no correcta',
           available_life: av_life,
           status: 404,
         }
@@ -83,14 +74,17 @@ export class WordService extends CommonService {
     }
   }
 
-  //Se obtiene id de palabra con la cantidad de letras total
-  public async getWord(id_player: number, pool?: PGPool): Promise<any> {
+  //Se obtienen valores a mostrar de la operación
+  public async getMath(id_player: number, pool?: PGPool): Promise<any> {
     try {
       const playerExists = await this.getRows(`SELECT id, name FROM player WHERE id = '${id_player}'`)
 
       if (!playerExists.success) throw { message: 'Player does not exist', status: 404 }
 
-      const wordResult = await this.getRows('SELECT id, name FROM words ORDER BY random() LIMIT 1', [])
+      const mathResult = await this.getRows(
+        'SELECT id, operando1, operando2, resultado FROM math ORDER BY random() LIMIT 1',
+        [],
+      )
 
       // insert id_game and id_player into Gameinplay table.
       let pooldefinedLocally = false
@@ -101,15 +95,15 @@ export class WordService extends CommonService {
         // begin transaction
         await Helper.beginTransaction(pool, this.user_current)
       }
-      //Se actualiza la tabla de palabras asociada al jugador. Solo una por jugador.- En caso de existir, se sobreescribe
-      const sql_wordsplayer =
-        'INSERT INTO wordsplayer(id_player, id_word, retry) VALUES ($1, $2, 0) ON CONFLICT (id_player) DO UPDATE SET id_word = $2'
-      const wordsplayerParams = [id_player, wordResult.data.result[0].id]
-      await pool.aquery(this.user_current, sql_wordsplayer, wordsplayerParams)
+      //Se actualiza la tabla de math asociada al jugador. Solo una por jugador.- En caso de existir, se sobreescribe
+      const sql_mathplayer =
+        'INSERT INTO mathplayer(id_player, id_math) VALUES ($1, $2) ON CONFLICT (id_player) DO UPDATE SET id_math = $2'
+      const mathplayerParams = [id_player, mathResult.data.result[0].id]
+      await pool.aquery(this.user_current, sql_mathplayer, mathplayerParams)
 
       //Se actualiza la tabla de juego y vidas
       const sql_gameinplay =
-        'INSERT INTO gameinplay(id_player, id_game, available_life) VALUES ($1, 3, 3) ' +
+        'INSERT INTO gameinplay(id_player, id_game, available_life) VALUES ($1, 2, 3) ' +
         'ON CONFLICT (id_player, id_game) DO UPDATE SET available_life = 3 returning id_player, id_game'
       const gameinplayParams = [id_player]
       await pool.aquery(this.user_current, sql_gameinplay, gameinplayParams)
@@ -118,7 +112,11 @@ export class WordService extends CommonService {
 
       return {
         success: true,
-        data: { id: wordResult.data.result[0].id, cantidad_letras: wordResult.data.result[0].name.length },
+        data: {
+          operando1: mathResult.data.result[0].operando1,
+          operando2: mathResult.data.result[0].operando2,
+          resultado: mathResult.data.result[0].resultado,
+        },
       }
     } catch (error) {
       logger.error(`Error: ${error}`)
@@ -127,4 +125,4 @@ export class WordService extends CommonService {
   }
 }
 
-export default WordService
+export default MathService

@@ -20,12 +20,4 @@ export class WordsController {
     const response: ResponseWrapper = new ResponseWrapper(res)
     return response.ok(await wordService.getWord(parseInt(req.params.id_player)))
   }
-
-  public static async addPlayerToGame(req: CUserAuthInfoRequest, res: Response) {
-    const objSysAdmin = req.cUser ? req.cUser : Helper.defaultUser()
-    const { id_game, id_player } = req.body
-    const wordService: WordService = new WordService(objSysAdmin)
-    const response: ResponseWrapper = new ResponseWrapper(res)
-    return response.ok(await wordService.addPlayerToGame(id_game, id_player))
-  }
 }

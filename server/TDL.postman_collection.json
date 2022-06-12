@@ -135,15 +135,12 @@
 		},
 		{
 			"name": "Math - A partir del id del jugador y el operando enviado, devuelve cantidad de vidas disponibles y si es correcto o no.",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\n    \"operator\": \"/\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -151,7 +148,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9000/v0/math/24//",
+					"raw": "http://localhost:9000/v0/math/24",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -160,9 +157,7 @@
 					"path": [
 						"v0",
 						"math",
-						"24",
-						"",
-						""
+						"24"
 					]
 				}
 			},
