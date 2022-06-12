@@ -2,10 +2,12 @@ import React from 'react'
 
 
 class PalabraOfuscada extends React.Component {
-    private word_len: number = 0;
 
     constructor(props:any){
         super(props);
+        this.state = {
+            word_len: 0
+        };
     }
 
     public setLetter(letter:string , idx:number ):void {        
@@ -17,24 +19,28 @@ class PalabraOfuscada extends React.Component {
         }
     }
 
+
     componentDidMount() {
-        //Ejemplo base del fetch
-        // fetch("https://gorest.co.in/public/v2/posts/")
-        // .then(response => response.json())
-        // .then(data => {
-        //     this.lista_juegos = data;
-        // });
-        
-        // deberiamos ir al backend con un fetch para obtener la palabra ..
-        this.word_len = 5;
-        // actualizamos lo que se tiene que mostrar para la palabra..
-        this.forceUpdate();
+        //TODO: aca estamos hardcodeando el id de jugador.. 1
+        fetch("http://localhost:9000/v0/hangman/1")
+        .then(response => response.json())
+        .then(data => {
+            // aca deberiamos chequear que el response sea 200
+            if (data.success = true){
+                this.setState({word_len:data.data.cantidad_letras
+                });
+            }
+            else {
+                alert("error fetch palabra");
+            }
+            
+        });
     }  
 
     InitOfuscado() {
         let i:number = 0;
         let _arr:Array<any> = [];
-        while (i < this.word_len){
+        while (i < this.state.word_len){
             _arr.push(<span id={'letter_' + i} className='letter'></span>);
             i++;
         }

@@ -34,10 +34,16 @@ class App extends React.Component {
   }
 
   componentDidMount(): void {
-    fetch("https://gorest.co.in/public/v2/posts/")
+    fetch("http://localhost:9000/v0/games")
     .then(response => response.json())
     .then(data => {
-      console.log(data);
+      console.log(data.data);
+        let games_arr = data.data;
+        
+        for (let index = 0; index < games_arr.length; index++) {
+          const element = games_arr[index];
+          
+      }
       // aca deberiamos setear los id de los juegos
       this.getGameId("hola");
     });
@@ -45,7 +51,6 @@ class App extends React.Component {
   }
 
   getGameId(e) {
-    console.log(e);
     this.setState({ahorcado_id:3});
   }
   

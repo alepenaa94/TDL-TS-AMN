@@ -2,14 +2,14 @@ import React from 'react';
 
 import Figura from '../components/ahorcado/Figura.tsx';
 import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada.tsx';
-import CInput from '../components/Input.tsx';
+import LetrasErroneas from '../components/ahorcado/LetrasErroneas.tsx';
 
 
 
 class Ahorcado extends React.Component {
 
     private pal_ofsc:any = null;
-    private input_area:any = null;
+    private letras_err:any = null;
     private figura:any = null;
 
     private idx_temp:number = 0;
@@ -17,36 +17,54 @@ class Ahorcado extends React.Component {
     constructor(props:any){
         super(props);
         this.pal_ofsc = React.createRef();
-        this.input_area = React.createRef();
         this.figura = React.createRef();
+        this.letras_err = React.createRef();
         console.log(props);
+        window.addEventListener('keydown',this.handleKeydown);
     }
 
+    handleKeydown = event => {
+        const { key, keyCode } = event;
+        if ( keyCode >= 65 && keyCode <= 90) {
+            let mi_letter:string = key.toLowerCase();
+            
+            console.log(mi_letter);
 
-    UNSAFE_componentWillUpdate() {
-        const handleKeydown = event => {
-            const { key, keyCode } = event;
-            if ( keyCode >= 65 && keyCode <= 90) {
-              let mi_letter:string = key.toLowerCase();
-              
-              console.log(mi_letter);
-
-              this.pal_ofsc.current.setLetter(mi_letter,this.idx_temp);
-
-              if (this.idx_temp == 4){
-                  this.idx_temp = 0;
-  
-                  this.funcion_error();
-  
-              } else {
-                  this.idx_temp++;
-              }
-
+            //chequeamos primero si no la ingreso ya erronea..
+            if(this.letras_err.current.checkLetraErr(mi_letter)) {
+                alert("letra erronea ya ingresada!");
+            }else {
+                
+                //TODO: aca va el player hardcodeado
+                fetch("http://localhost:9000/v0/hangman/1/"+mi_letter)
+                .then((response) => {
+                    if(!response.ok) throw new Error(response.status);
+                    else return response.json();
+                })
+                .then(data => {
+                    // aca deberiamos chequear que el response sea 200
+                    if (data.success = true){
+                        alert("letra ok!!");
+                        console.log('len='+data.data.location.length);
+                        for (let index = 0; index < data.data.location.length; index++) {
+                            console.log(data.data.location[index]);
+                            this.pal_ofsc.current.setLetter(mi_letter,data.data.location[index]-1);
+                        }                    
+                    }
+                    else {
+                        alert("error fetch validar palabra");
+                    }
+                    
+                })
+                .catch((error) => {
+                    alert('Letra erronea');
+                    this.funcion_error();
+                    this.letras_err.current.addLetraErr(mi_letter);
+                });
             }
         }
-        window.addEventListener('keydown', handleKeydown);
     }
-    
+
 
 
 
@@ -57,33 +75,6 @@ class Ahorcado extends React.Component {
     }
 
     
-    
-
-    clickFn() {
-
-        let str:string = this.input_area.current.getValue();
-        //console.log(str);
-        let len:number = str.length;
-        if (len==0) {
-            alert("ESTA VACIA inserta algo..");
-        } else if (len == 1) {
-            // ACA deberiamos ir al back y validar si la letra es correcta..
-            // Seteamos la letra!
-            this.pal_ofsc.current.setLetter(str,this.idx_temp);
-
-            if (this.idx_temp == 4){
-                this.idx_temp = 0;
-
-                this.funcion_error();
-
-            } else {
-                this.idx_temp++;
-            }
-        } else {
-            alert("Solamente se puede insertar un caracter..");
-        }
-    }
-
 
     
     render(): React.ReactNode {
@@ -93,11 +84,11 @@ class Ahorcado extends React.Component {
                 <div className="row justify-content-center">
                     <section id="ahorcado" className='amn-page text-center h1'> ESTE ES EL JUEGO DEL AHORCADO. 
                         <div className='game-container'>
+                            
                             <Figura ref={this.figura} />
                             
                             <PalabraOfuscada ref={this.pal_ofsc} />
-                            
-                            
+                            <LetrasErroneas ref={this.letras_err} />
                             
                         </div>
                         
