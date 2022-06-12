@@ -110,7 +110,7 @@ export class WordService extends CommonService {
       //Se actualiza la tabla de juego y vidas
       const sql_gameinplay =
         'INSERT INTO gameinplay(id_player, id_game, available_life) VALUES ($1, 3, 6) ' +
-        'ON CONFLICT (id_player, id_game) DO UPDATE SET available_life = 3 returning id_player, id_game'
+        'ON CONFLICT (id_player, id_game) DO UPDATE SET available_life = 6 returning id_player, id_game'
       const gameinplayParams = [id_player]
       await pool.aquery(this.user_current, sql_gameinplay, gameinplayParams)
       // commit if there is a transaction
