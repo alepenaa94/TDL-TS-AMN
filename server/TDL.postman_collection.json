@@ -255,6 +255,92 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Ortografía - A partir del id del jugador, devuelve la palabra a adivinar y las vidas que le quedan al jugador.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/v0/ortografia/24",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"ortografia",
+						"24"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ortografia - A partir del id del jugador y si es ok enviar true y si no es ok enviar false devuelve  la cantidad de vidas restantes y status false si es incorrecto.",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/ortografia/24/true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"ortografia",
+						"24",
+						"true"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ranking - Set rank to a player",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/rank/2/24",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"rank",
+						"2",
+						"24"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
