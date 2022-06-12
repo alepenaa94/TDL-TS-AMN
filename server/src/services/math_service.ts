@@ -60,13 +60,11 @@ export class MathService extends CommonService {
         if (updatedGameInPlay.rowCount <= 0) {
           throw { message: 'Error al actualizar las vidas', status: 400 }
         }
+        console.log(av_life)
         // commit if there is a transaction
         if (pooldefinedLocally) await Helper.commitTransaction(pool, this.user_current)
-        throw {
-          message: 'Operación no correcta',
-          available_life: av_life,
-          status: 404,
-        }
+
+        return { success: false, data: { message: 'Operación no correcta', available_life: av_life }, status: 404 }
       }
     } catch (error) {
       logger.error(`Error: ${error}`)
