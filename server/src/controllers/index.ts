@@ -9,3 +9,5 @@ export * from './words'
 export * from './math'
 
 export * from './writewell'
+
+export * from './rank'

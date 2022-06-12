@@ -11,3 +11,5 @@ export * from './word_service'
 export * from './math_service'
 
 export * from './writewell_service'
+
+export * from './rank_service'

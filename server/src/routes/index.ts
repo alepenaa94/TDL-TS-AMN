@@ -6,6 +6,7 @@ import player from './player'
 import words from './words'
 import math from './math'
 import writeWell from './writewell'
+import rank from './rank'
 
 const router = Router()
 
@@ -20,5 +21,7 @@ router.use('/hangman', words)
 router.use('/math', math)
 
 router.use('/ortografia', writeWell)
+
+router.use('/rank', rank)
 
 export default router
