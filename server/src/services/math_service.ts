@@ -114,6 +114,7 @@ export class MathService extends CommonService {
           operando1: mathResult.data.result[0].operando1,
           operando2: mathResult.data.result[0].operando2,
           resultado: mathResult.data.result[0].resultado,
+          available_life: 3,
         },
       }
     } catch (error) {

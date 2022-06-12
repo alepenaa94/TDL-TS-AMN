@@ -118,7 +118,7 @@ export class WordService extends CommonService {
 
       return {
         success: true,
-        data: { id: wordResult.data.result[0].id, cantidad_letras: wordResult.data.result[0].name.length },
+        data: { cantidad_letras: wordResult.data.result[0].name.length, available_life: 6 },
       }
     } catch (error) {
       logger.error(`Error: ${error}`)
