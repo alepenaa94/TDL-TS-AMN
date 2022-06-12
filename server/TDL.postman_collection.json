@@ -6,42 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Consultar letra perteneciente a palabra",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:9000/v0/hangman/24/p",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9000",
-					"path": [
-						"v0",
-						"hangman",
-						"24",
-						"p"
-					]
-				},
-				"description": "Pasandole el ID de usuario y la letra , te dice en qué posiciones se encuentra"
-			},
-			"response": []
-		},
-		{
-			"name": "Get word",
+			"name": "Hangman - A partir del id del jugador, devuelve la cantidad de letras de la palabra a adivinar y las vidas que le quedan al jugador.",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -63,7 +28,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Games",
+			"name": "Games - Obtener todos los juegos",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -78,19 +43,18 @@
 						"v0",
 						"games"
 					]
-				},
-				"description": "Se obtienen todos los juegos disponibles"
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Add Player to Game",
+			"name": "Player - Crea nuevo jugador a partir del id_game.",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"id_game\": 1,\n  \"id_player\": 8\n}",
+					"raw": "{\n  \"id_game\": 1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -115,7 +79,7 @@
 			"response": []
 		},
 		{
-			"name": "Get location of letter",
+			"name": "Hangman - A partir del id del jugador y la letra enviada, devuelve si es correcta o no y la cantidad de vidas restantes.",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -143,6 +107,155 @@
 						"hangman",
 						"24",
 						"o"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Math - A partir del id del jugador, devuelve los operandos y el resultado de la operatoria",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/v0/math/24",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"math",
+						"24"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Math - A partir del id del jugador y el operando enviado, devuelve cantidad de vidas disponibles y si es correcto o no.",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/math/24//",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"math",
+						"24",
+						"",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Games - Se asocia un nuevo juego al jugador existente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id_game\": 1,\n  \"id_player\": 8\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/players/addPlayerToGame",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"players",
+						"addPlayerToGame"
+					]
+				},
+				"description": "Asocia un juego al jugador existente."
+			},
+			"response": []
+		},
+		{
+			"name": "Player - Se agrega nombre al jugador",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 8,\n  \"name\": \"Nerea\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/players/addNameToPlayer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"players",
+						"addNameToPlayer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Player - Obtiene todos los jugadores con sus puntajes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 8,\n  \"name\": \"Nerea\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/players",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"players"
 					]
 				}
 			},
