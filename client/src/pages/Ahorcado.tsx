@@ -4,14 +4,13 @@ import Figura from '../components/ahorcado/Figura.tsx';
 import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada.tsx';
 import LetrasErroneas from '../components/ahorcado/LetrasErroneas.tsx';
 
-
+import { useNavigate } from "react-router-dom";
 
 class Ahorcado extends React.Component {
-
     private pal_ofsc:any = null;
     private letras_err:any = null;
     private figura:any = null;
-
+    private callback_jugador:any = null;
     private idx_temp:number = 0;
 
     constructor(props:any){
@@ -21,6 +20,14 @@ class Ahorcado extends React.Component {
         this.letras_err = React.createRef();
         console.log(props);
         window.addEventListener('keydown',this.handleKeydown);
+        
+
+    }
+
+    componentDidMount() {
+        //  veamos antes de cargar algo si tenemos el login hecho
+        this.props.app.callback_jugador(this.props.id_game);
+        
     }
 
     handleKeydown = event => {
