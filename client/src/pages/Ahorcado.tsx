@@ -3,31 +3,40 @@ import React from 'react';
 import Figura from '../components/ahorcado/Figura.tsx';
 import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada.tsx';
 import LetrasErroneas from '../components/ahorcado/LetrasErroneas.tsx';
+import { Navigate } from 'react-router-dom';
 
-import { useNavigate } from "react-router-dom";
+
 
 class Ahorcado extends React.Component {
     private pal_ofsc:any = null;
     private letras_err:any = null;
     private figura:any = null;
-    private callback_jugador:any = null;
-    private idx_temp:number = 0;
 
     constructor(props:any){
         super(props);
         this.pal_ofsc = React.createRef();
         this.figura = React.createRef();
         this.letras_err = React.createRef();
-        console.log(props);
+
         window.addEventListener('keydown',this.handleKeydown);
-        
+        this.state = {
+            end_game:false,
+            log_in:false
+
+        }
 
     }
+
+    
 
     componentDidMount() {
         //  veamos antes de cargar algo si tenemos el login hecho
         this.props.app.callback_jugador(this.props.id_game);
         
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keydown',this.handleKeydown);
     }
 
     handleKeydown = event => {
@@ -41,11 +50,13 @@ class Ahorcado extends React.Component {
             if(this.letras_err.current.checkLetraErr(mi_letter)) {
                 alert("letra erronea ya ingresada!");
             }else {
-                
-                //TODO: aca va el player hardcodeado
-                fetch("http://localhost:9000/v0/hangman/1/"+mi_letter)
+
+                fetch("http://localhost:9000/v0/hangman/"+this.props.jugador_id+"/"+mi_letter)
                 .then((response) => {
-                    if(!response.ok) throw new Error(response.status);
+                    if(!response.ok) {
+                        // aca deberiamos manejar el que esta sin vida?
+                        throw new Error(response.status);
+                    }
                     else return response.json();
                 })
                 .then(data => {
@@ -65,28 +76,28 @@ class Ahorcado extends React.Component {
                 })
                 .catch((error) => {
                     alert('Letra erronea');
-                    this.funcion_error();
-                    this.letras_err.current.addLetraErr(mi_letter);
+                    //TODO: arreglar esto asi feo..
+                    if (this.figura.current.show_more()==false){
+                        this.setState({end_game:true});
+                    }else {
+                        this.letras_err.current.addLetraErr(mi_letter);
+                    }
                 });
             }
         }
     }
-
-
-
-
-    funcion_error() {
-        if (this.figura.current.show_more()==false) {
-            alert("SE TERMINO EL JUEGO!");
-        }
-    }
-
     
 
     
     render(): React.ReactNode {
+        if (this.state.end_game) {
+            alert("El juego finalizó");
+            return <Navigate to="/" replace={true}  />
+        } else if (this.props.jugador_id==-1) {
+            return <Navigate to="/Login" replace={true} />
+        }
         return (
-
+            
             <div className="container">
                 <div className="row justify-content-center">
                     <section id="ahorcado" className='amn-page text-center h1'> ESTE ES EL JUEGO DEL AHORCADO. 
@@ -94,7 +105,7 @@ class Ahorcado extends React.Component {
                             
                             <Figura ref={this.figura} />
                             
-                            <PalabraOfuscada ref={this.pal_ofsc} />
+                            <PalabraOfuscada ref={this.pal_ofsc} jugador_id={this.props.jugador_id} />
                             <LetrasErroneas ref={this.letras_err} />
                             
                         </div>

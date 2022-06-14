@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 // @ts-ignore
 import Header from "./components/Header.tsx";
 // @ts-ignore
@@ -17,7 +17,7 @@ import Error404 from "./pages/Error404.tsx";
 // @ts-ignore
 import Footer from "./components/Footer.tsx";
 
-import PopupLogin from "./components/Popup.tsx";
+import Login from "./pages/Login.tsx";
 
 
 
@@ -37,7 +37,9 @@ class App extends React.Component {
       mates_id: -1,
       escribo_id: -1,
       jugador_id: -1,
-      show_p: false
+
+      show_p: false,
+      last_path:''
     };
 
     this.setAhorcadoId = this.setAhorcadoId.bind(this);
@@ -94,7 +96,6 @@ class App extends React.Component {
   }
   
   public callback_jugador(id_game:number) {
-    console.log("me llamasteeeeeeeeeeeee!!");
     if (this.state.jugador_id==-1) {
       fetch("http://localhost:9000/v0/players/addPlayerToGame", {
           method: 'POST',
@@ -112,8 +113,31 @@ class App extends React.Component {
         })
       .then(data => {
           console.log(data.data.result);
-          this.setState({jugador_id:data.data.id_player});
-          this.ref_popup.current.showPopUp(data.data.id_player);
+          let _path = '';
+          switch (id_game) {
+            case this.state.ahorcado_id:
+                _path = "/ahorcado";
+                break;
+          
+            case this.state.grrr_id:
+                _path = "/grrr";
+                break;
+            
+            case this.state.mates_id:
+                _path = "/mates";
+                break;
+              
+            case this.state.escribo_id:
+                _path = "/escribo";
+                break;
+
+            default:
+              _path = "/";
+              break;
+          }
+          this.setState({jugador_id:data.data.id_player,show_p:true,last_path:_path});
+          this.ref_popup.current.setJugadorId(data.data.id_player);
+          
       })
       .catch((error) => {
           alert(error);
@@ -122,8 +146,14 @@ class App extends React.Component {
     }
   }
 
+  public getCallPath():string {
+    return this.state.last_path;
+  }
+
   
   render(): React.ReactNode {
+
+
     return (
       <div className="App">
         <Router>
@@ -133,14 +163,21 @@ class App extends React.Component {
             <Route path="/ahorcado" element={<Ahorcado jugador_id={this.state.jugador_id}
                                                id_game={this.state.ahorcado_id}
                                                app={this}/>} />
-            <Route path="/grrr" element={<Grrr id_game={this.state.grrr_id}/>} />
-            <Route path="/mates" element={<Mates id_game={this.state.mates_id}/>} />
-            <Route path="/escribo" element={<Escribo id_game={this.state.escribo_id}/>} />
+            <Route path="/grrr" element={<Grrr jugador_id={this.state.jugador_id}
+                                               app={this}
+                                               id_game={this.state.grrr_id}/>} />
+            <Route path="/mates" element={<Mates jugador_id={this.state.jugador_id}
+                                                 app={this}
+                                                 id_game={this.state.mates_id}/>} />
+            <Route path="/escribo" element={<Escribo jugador_id={this.state.jugador_id}
+                                                     app={this}
+                                                     id_game={this.state.escribo_id}/>} />
+            <Route path="/login" element={<Login ref={this.ref_popup} app={this}/>} />
             <Route path="*" element={<Error404 />} />
           </Routes>
           <Footer />
         </Router>
-        <PopupLogin mensaje="Ingrese su nombre" ref={this.ref_popup} />
+        
       </div>
     );
   }

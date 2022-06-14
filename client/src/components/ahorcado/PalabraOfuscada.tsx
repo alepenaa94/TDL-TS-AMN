@@ -21,20 +21,22 @@ class PalabraOfuscada extends React.Component {
 
 
     componentDidMount() {
-        //TODO: aca estamos hardcodeando el id de jugador.. 1
-        fetch("http://localhost:9000/v0/hangman/1")
-        .then(response => response.json())
-        .then(data => {
-            // aca deberiamos chequear que el response sea 200
-            if (data.success = true){
-                this.setState({word_len:data.data.cantidad_letras
-                });
-            }
-            else {
-                alert("error fetch palabra");
-            }
-            
-        });
+        if (this.props.jugador_id!=-1){
+            fetch("http://localhost:9000/v0/hangman/"+this.props.jugador_id)
+            .then(response => response.json())
+            .then(data => {
+                // aca deberiamos chequear que el response sea 200
+                if (data.success = true){
+                    this.setState({word_len:data.data.cantidad_letras
+                    });
+                }
+                else {
+                    alert("error fetch palabra");
+                }
+                
+            });
+        }
+        
     }  
 
     InitOfuscado() {

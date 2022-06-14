@@ -2,11 +2,13 @@ import React from "react";
 
 class PopupLogin extends React.Component {
 
+
     constructor(props) {
         super(props);
         this.state = {
             show_p: false,
-            id_player: -1
+            id_player: -1,
+            callbackend: ()=>{}
         }
 
         this.sendName = this.sendName.bind(this);
@@ -38,11 +40,15 @@ class PopupLogin extends React.Component {
         });
           
         this.setState({show_p:false});
+        // vamos a finalizar lo que pidieron
+        console.log(this.state.callbackend);
+        //this.state.callbackend();
+        console.log(this.props);
+        
     }
 
-    public showPopUp(id_player) {
-        this.setState({id_player:id_player, show_p:true});
-        
+    public showPopUp(id_player,_callbackend) {
+        this.setState({id_player:id_player, show_p:true,callbackend:_callbackend});
     }
 
 
@@ -51,7 +57,7 @@ class PopupLogin extends React.Component {
             <div className="popup-container" style={this.state.show_p == true ? {display:'flex'} : {}}>
                 <div className="popup">
                     <h2>{this.props.mensaje}</h2>
-                    
+                    <input className="form-control" type="text" placeholder="Default input"></input>
                     <button onClick={this.sendName}>Enter</button>
                 </div>
             </div>
