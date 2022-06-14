@@ -1,35 +1,12 @@
+import IGame from "../components/IGame.tsx";
 
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-
-
-
-class Grrr extends React.Component {
+class Grrr extends IGame {
 
     constructor(props:any){
         super(props);
-        
-        this.state = {
-            end_game:false,
-            log_in:false
-        }
-
     }
 
-    componentDidMount() {
-        //  veamos antes de cargar algo si tenemos el login hecho
-        this.props.app.callback_jugador(this.props.id_game);
-        
-    }
-
-    
-    render(): React.ReactNode {
-        if (this.state.end_game) {
-            alert("El juego finalizó");
-            return <Navigate to="/" replace={true}  />
-        } else if (this.props.jugador_id==-1) {
-            return <Navigate to="/Login" replace={true} />
-        }
+    defaultRender(): ReactNode {
         return (
             <div className="container">
                 <div className="row justify-content-center">

@@ -1,13 +1,12 @@
-import React from 'react';
+import IGame from "../components/IGame.tsx";
 
 import Figura from '../components/ahorcado/Figura.tsx';
 import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada.tsx';
 import LetrasErroneas from '../components/ahorcado/LetrasErroneas.tsx';
-import { Navigate } from 'react-router-dom';
+import React from "react";
 
 
-
-class Ahorcado extends React.Component {
+class Ahorcado extends IGame {
     private pal_ofsc:any = null;
     private letras_err:any = null;
     private figura:any = null;
@@ -19,21 +18,8 @@ class Ahorcado extends React.Component {
         this.letras_err = React.createRef();
 
         window.addEventListener('keydown',this.handleKeydown);
-        this.state = {
-            end_game:false,
-            log_in:false
-
-        }
-
     }
 
-    
-
-    componentDidMount() {
-        //  veamos antes de cargar algo si tenemos el login hecho
-        this.props.app.callback_jugador(this.props.id_game);
-        
-    }
 
     componentWillUnmount() {
         window.removeEventListener('keydown',this.handleKeydown);
@@ -89,15 +75,8 @@ class Ahorcado extends React.Component {
     
 
     
-    render(): React.ReactNode {
-        if (this.state.end_game) {
-            alert("El juego finalizó");
-            return <Navigate to="/" replace={true}  />
-        } else if (this.props.jugador_id==-1) {
-            return <Navigate to="/Login" replace={true} />
-        }
+    defaultRender(): ReactNode {
         return (
-            
             <div className="container">
                 <div className="row justify-content-center">
                     <section id="ahorcado" className='amn-page text-center h1'> ESTE ES EL JUEGO DEL AHORCADO. 
@@ -113,9 +92,8 @@ class Ahorcado extends React.Component {
     
                     </section>
                 </div>
-            </div>   
-    
-        )   
+            </div>
+        )
     }
 }
 
