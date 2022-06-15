@@ -341,6 +341,73 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Audio - Obtiene id del audio a reproducir. Se debe enviar id_player",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/audio/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"audio",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Audio - A partir del id del jugador y la respuesta, deuvelve ok  o no",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/v0/audio/1/caball",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"v0",
+						"audio",
+						"1",
+						"caball"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
