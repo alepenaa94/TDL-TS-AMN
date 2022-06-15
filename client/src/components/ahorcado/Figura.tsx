@@ -14,6 +14,8 @@ class Figura extends React.Component{
                 console.log("error parte no encontrada!");
             }
             this.contador++;
+            if (this.contador==6)
+                return false;
             return true;
         }
         return false;

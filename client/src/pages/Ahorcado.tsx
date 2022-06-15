@@ -1,85 +1,82 @@
-import React from 'react';
+import IGame from "../components/IGame.tsx";
 
 import Figura from '../components/ahorcado/Figura.tsx';
 import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada.tsx';
 import LetrasErroneas from '../components/ahorcado/LetrasErroneas.tsx';
+import React from "react";
+import { message } from '../../../server/src/constants/messages/index';
 
 
-
-class Ahorcado extends React.Component {
-
+class Ahorcado extends IGame {
     private pal_ofsc:any = null;
     private letras_err:any = null;
     private figura:any = null;
-
-    private idx_temp:number = 0;
+    private letras_cargadas:Array<string> = [];
 
     constructor(props:any){
         super(props);
         this.pal_ofsc = React.createRef();
         this.figura = React.createRef();
         this.letras_err = React.createRef();
-        console.log(props);
+
         window.addEventListener('keydown',this.handleKeydown);
+    }
+
+
+    componentWillUnmount() {
+        window.removeEventListener('keydown',this.handleKeydown);
     }
 
     handleKeydown = event => {
         const { key, keyCode } = event;
         if ( keyCode >= 65 && keyCode <= 90) {
             let mi_letter:string = key.toLowerCase();
-            
-            console.log(mi_letter);
 
             //chequeamos primero si no la ingreso ya erronea..
-            if(this.letras_err.current.checkLetraErr(mi_letter)) {
-                alert("letra erronea ya ingresada!");
+            if(this.letras_err.current.checkLetraErr(mi_letter) ||
+               this.letras_cargadas.includes(mi_letter)) {
+                alert("Letra ya ingresada!");
             }else {
-                
-                //TODO: aca va el player hardcodeado
-                fetch("http://localhost:9000/v0/hangman/1/"+mi_letter)
+                // mandamos la validación al backend.. 
+                fetch("http://localhost:9000/v0/hangman/"+this.props.jugador_id+"/"+mi_letter)
                 .then((response) => {
-                    if(!response.ok) throw new Error(response.status);
-                    else return response.json();
+                    return response.json();
                 })
                 .then(data => {
                     // aca deberiamos chequear que el response sea 200
-                    if (data.success = true){
-                        alert("letra ok!!");
-                        console.log('len='+data.data.location.length);
+                    if (data.success == true){
                         for (let index = 0; index < data.data.location.length; index++) {
-                            console.log(data.data.location[index]);
                             this.pal_ofsc.current.setLetter(mi_letter,data.data.location[index]-1);
-                        }                    
+                        }
+                        this.letras_cargadas.push(mi_letter);
+                        // aca tenemos que validar si se completo la palabra
+                        // ofuscada.. si es asi mandamos al back fin de juego
+                        // y lo mandamos a la pagina ganador.
+                        if (this.pal_ofsc.current.getWordLeft()==0){
+                            fetch("http://localhost:9000/v0/rank/"+
+                                  this.props.id_game+"/"+this.props.jugador_id);
+                            this.setState({win_game:true});
+                        }
                     }
                     else {
-                        alert("error fetch validar palabra");
+                        alert(data.data.message);
+                        this.figura.current.show_more();
+                        if (data.data.available_life==0) {
+                            this.setState({end_game:true});
+                        }else {
+                            this.letras_err.current.addLetraErr(mi_letter);
+                        }
                     }
                     
                 })
-                .catch((error) => {
-                    alert('Letra erronea');
-                    this.funcion_error();
-                    this.letras_err.current.addLetraErr(mi_letter);
-                });
             }
         }
     }
-
-
-
-
-    funcion_error() {
-        if (this.figura.current.show_more()==false) {
-            alert("SE TERMINO EL JUEGO!");
-        }
-    }
-
     
 
     
-    render(): React.ReactNode {
+    defaultRender(): ReactNode {
         return (
-
             <div className="container">
                 <div className="row justify-content-center">
                     <section id="ahorcado" className='amn-page text-center h1'> ESTE ES EL JUEGO DEL AHORCADO. 
@@ -87,7 +84,7 @@ class Ahorcado extends React.Component {
                             
                             <Figura ref={this.figura} />
                             
-                            <PalabraOfuscada ref={this.pal_ofsc} />
+                            <PalabraOfuscada ref={this.pal_ofsc} jugador_id={this.props.jugador_id} />
                             <LetrasErroneas ref={this.letras_err} />
                             
                         </div>
@@ -95,9 +92,8 @@ class Ahorcado extends React.Component {
     
                     </section>
                 </div>
-            </div>   
-    
-        )   
+            </div>
+        )
     }
 }
 

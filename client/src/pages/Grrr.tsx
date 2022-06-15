@@ -1,15 +1,20 @@
-import React from 'react';
+import IGame from "../components/IGame.tsx";
 
-export default function Grrr() {
-    
-    return (
+class Grrr extends IGame {
 
-        <div className="container">
-            <div className="row justify-content-center">
-                <section id="grrr" className='amn-page text-center'> ESTE ES EL JUEGO DEL GRRR. </section>
+    constructor(props:any){
+        super(props);
+    }
+
+    defaultRender(): ReactNode {
+        return (
+            <div className="container">
+                <div className="row justify-content-center">
+                    <section id="grrr" className='amn-page text-center'> ESTE ES EL JUEGO DEL GRRR. </section>
+                </div>
             </div>
-        </div>
-
-    )
-
+        )   
+    }
 }
+
+export default Grrr; 

@@ -1,15 +1,22 @@
-import React from 'react';
 
-export default function Mates() {
-    
-    return (
+import IGame from "../components/IGame.tsx";
 
-        <div className="container">
-            <div className="row justify-content-center">
-                <section id="mates" className='amn-page text-center'> ESTE ES EL JUEGO DE LAS MATEMÁTICAS. </section>
+class Mates extends IGame {
+
+    constructor(props:any){
+        super(props);
+    }
+
+    defaultRender(): ReactNode {
+        return (
+            <div className="container">
+                <div className="row justify-content-center">
+                    <section id="mates" className='amn-page text-center'> ESTE ES EL JUEGO DE LAS MATEMÁTICAS. </section>
+                </div>
             </div>
-        </div>
-
-    )
-
+        );
+    }
+    
 }
+
+export default Mates; 

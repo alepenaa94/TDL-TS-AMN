@@ -2,7 +2,7 @@ import React from 'react'
 
 
 class PalabraOfuscada extends React.Component {
-
+    private word_left:number=0;
     constructor(props:any){
         super(props);
         this.state = {
@@ -14,27 +14,35 @@ class PalabraOfuscada extends React.Component {
         let letter_span = document.getElementById('letter_'+idx);
         if (letter_span) {
             letter_span.innerHTML = letter;
+            this.word_left = this.word_left- 1;
+            console.log(this.word_left);
         } else {
             console.log("algo paso y no existe le elmeento a setear!");
         }
     }
 
+    public getWordLeft():number {
+        return this.word_left;
+    }
+
 
     componentDidMount() {
-        //TODO: aca estamos hardcodeando el id de jugador.. 1
-        fetch("http://localhost:9000/v0/hangman/1")
-        .then(response => response.json())
-        .then(data => {
-            // aca deberiamos chequear que el response sea 200
-            if (data.success = true){
-                this.setState({word_len:data.data.cantidad_letras
-                });
-            }
-            else {
-                alert("error fetch palabra");
-            }
-            
-        });
+        if (this.props.jugador_id!=-1){
+            fetch("http://localhost:9000/v0/hangman/"+this.props.jugador_id)
+            .then(response => response.json())
+            .then(data => {
+                // aca deberiamos chequear que el response sea 200
+                if (data.success = true){
+                    this.word_left  = data.data.cantidad_letras;
+                    this.setState({word_len:data.data.cantidad_letras});
+                }
+                else {
+                    alert("error fetch palabra");
+                }
+                
+            });
+        }
+        
     }  
 
     InitOfuscado() {
