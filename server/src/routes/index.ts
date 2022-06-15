@@ -7,6 +7,7 @@ import words from './words'
 import math from './math'
 import writeWell from './writewell'
 import rank from './rank'
+import audio from './audio'
 
 const router = Router()
 
@@ -23,5 +24,7 @@ router.use('/math', math)
 router.use('/ortografia', writeWell)
 
 router.use('/rank', rank)
+
+router.use('/audio', audio)
 
 export default router

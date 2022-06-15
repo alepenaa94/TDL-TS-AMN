@@ -13,3 +13,5 @@ export * from './math_service'
 export * from './writewell_service'
 
 export * from './rank_service'
+
+export * from './audio_service'
