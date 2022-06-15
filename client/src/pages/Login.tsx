@@ -42,9 +42,6 @@ class Login extends React.Component {
             if(!response.ok) throw new Error(response.status);
             else return response.json();
             })
-        .then(data => {
-            console.log(data);
-        })
         .catch((error) => {
             alert(error);
             alert('Error grave: no se pudo setear el jugador y juego');
@@ -56,7 +53,6 @@ class Login extends React.Component {
         
 
     render(): React.ReactNode {
-        console.log(this);
         if (this.state.need_return) {
             return <Navigate to={this.state.path} replace={true}  />
         }

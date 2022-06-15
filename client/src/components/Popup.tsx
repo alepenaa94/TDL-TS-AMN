@@ -1,68 +1,46 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 
-class PopupLogin extends React.Component {
+class Popup extends React.Component {
 
 
     constructor(props) {
         super(props);
         this.state = {
             show_p: false,
-            id_player: -1,
-            callbackend: ()=>{}
+            redirect: false
         }
-
-        this.sendName = this.sendName.bind(this);
+        this.redirect = this.redirect.bind(this);
+        this.showPopUp = this.showPopUp.bind(this);
     }
 
-    sendName() {
-        console.log(this.state.id_player);
-        fetch("http://localhost:9000/v0/players/addNameToPlayer", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: this.state.id_player,
-                name: "prueba locaa2"
-            })
-        })
-        .then((response) => {
-            if(!response.ok) throw new Error(response.status);
-            else return response.json();
-            })
-        .then(data => {
-            console.log(data);
-        })
-        .catch((error) => {
-            alert(error);
-            alert('Error grave: no se pudo setear el jugador y juego');
-        });
-          
-        this.setState({show_p:false});
-        // vamos a finalizar lo que pidieron
-        console.log(this.state.callbackend);
-        //this.state.callbackend();
-        console.log(this.props);
-        
+    redirect(){
+        this.setState({redirect:true,show_p:false});
     }
 
-    public showPopUp(id_player,_callbackend) {
-        this.setState({id_player:id_player, show_p:true,callbackend:_callbackend});
+    public showPopUp() {
+        console.log(this.props.wait);
+        setTimeout(() => {
+            this.setState({show_p: true});
+        }, this.props.wait);
     }
+
+   
 
 
     render(): React.ReactNode {
+        if (this.state.redirect) {
+            return <Navigate to={this.props.path_r} replace={true}  />
+        }
         return (
             <div className="popup-container" style={this.state.show_p == true ? {display:'flex'} : {}}>
                 <div className="popup">
                     <h2>{this.props.mensaje}</h2>
-                    <input className="form-control" type="text" placeholder="Default input"></input>
-                    <button onClick={this.sendName}>Enter</button>
+                    <button onClick={this.redirect}>Ok</button>
                 </div>
             </div>
         )    
     }
 }
 
-export default PopupLogin;
+export default Popup;

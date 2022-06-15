@@ -59,7 +59,6 @@ class App extends React.Component {
         
         for (let index = 0; index < games_arr.length; index++) {
           const elem = games_arr[index];
-          console.log(elem.name);
           if (elem.name == "Ahorcado") {
             this.setAhorcadoId(elem.id);
           } else if (elem.name == "Corrección ortográfica") {
@@ -112,7 +111,6 @@ class App extends React.Component {
           else return response.json();
         })
       .then(data => {
-          console.log(data.data.result);
           let _path = '';
           switch (id_game) {
             case this.state.ahorcado_id:
