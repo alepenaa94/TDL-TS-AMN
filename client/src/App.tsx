@@ -16,7 +16,7 @@ import Escribo from "./pages/Escribo.tsx";
 import Error404 from "./pages/Error404.tsx";
 // @ts-ignore
 import Footer from "./components/Footer.tsx";
-
+// @ts-ignore
 import Login from "./pages/Login.tsx";
 
 
@@ -68,7 +68,7 @@ class App extends React.Component {
           } else if (elem.name == "Grrr") {
             this.setGrrrId(elem.id);
           } else {
-            alert("jeugo no reconocido"+ elem);
+            alert("juego no reconocido"+ elem);
           }
 
       }
