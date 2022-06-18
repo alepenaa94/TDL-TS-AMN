@@ -12,12 +12,20 @@ type Operando = {
 
 export default class Mates extends IGame {
 
+    /* Esta informacion se utiliza solo para mostrarla, no se almacenan "realmente" las vidas o resultados reales. */
     private operando: any = null;
+    private operando1: any = null;
+    private operando2: any = null;
+    private resultado: any = null;
+    private vidas_restantes: any = null;
 
     constructor(props: any) {
         super(props);
-        this.getOperation();
-        this.operando = React.createRef();
+        this.operandoSuma = this.operandoSuma.bind(this);
+        this.operandoResta = this.operandoResta.bind(this);
+        this.operandoMultiplicacion = this.operandoMultiplicacion.bind(this);
+        this.operandoDivision = this.operandoDivision.bind(this);
+        this.newGame();
     }
 
     defaultRender(): ReactNode {
@@ -33,7 +41,7 @@ export default class Mates extends IGame {
                                 <p className="operando-mini-box" id="operando-numero-1">?</p>
                             </div>
                             <div className="p-2">
-                                <p className="operando-mini-box" id="operando-desconocido" ref={elem => this.operando = elem}>?</p>
+                                <p className="operando-mini-box" id="operando-desconocido">?</p>
                             </div>
                             <div className="p-2">
                                 <p className="operando-mini-box" id="operando-numero-2">?</p>
@@ -45,7 +53,10 @@ export default class Mates extends IGame {
                                 <p className="operando-mini-box" id="operando-resultado">?</p>
                             </div>
                         </div>
-
+                        <div className="d-flex flex-row-reverse">
+                            <div className="p-2 vidas-restantes-box" id="vidas-restantes">?</div>
+                            <div className="p-2 vidas-restantes-box">Vidas restantes: </div>
+                        </div>
                         <div className="row operandos-box">
                             <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-suma" onClick={this.operandoSuma}>+</Button></div>
                             <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-resta" onClick={this.operandoResta}>—</Button></div>
@@ -59,46 +70,65 @@ export default class Mates extends IGame {
         );
     }
 
-    getOperation() {
+    newGame() {
         request<Operando>("http://localhost:9000/v0/math/"+this.props.jugador_id).then(mates => {
 
-            const operando1 = document.getElementById('operando-numero-1') as HTMLInputElement | null;
-            const operando2 = document.getElementById('operando-numero-2') as HTMLInputElement | null;
-            const operandoResultado = document.getElementById('operando-resultado') as HTMLInputElement | null;
+            this.operando1 = document.getElementById('operando-numero-1') as HTMLInputElement | null;
+            this.operando2 = document.getElementById('operando-numero-2') as HTMLInputElement | null;
+            this.resultado = document.getElementById('operando-resultado') as HTMLInputElement | null;
+            this.vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
 
-            if (operando1 != null) {
-                operando1.innerHTML = mates['operando1'];
+            if (this.operando1 != null) {
+                this.operando1.innerHTML = mates['operando1'];
             }
 
-            if (operando2 != null) {
-                operando2.innerHTML = mates['operando2'];
+            if (this.operando2 != null) {
+                this.operando2.innerHTML = mates['operando2'];
             }
 
-            if (operandoResultado != null) {
-                operandoResultado.innerHTML = mates['resultado'];
+            if (this.resultado != null) {
+                this.resultado.innerHTML = mates['resultado'];
+            }
+
+            if (this.vidas_restantes != null) {
+                this.vidas_restantes.innerHTML = mates['available_life'];
             }
 
         })
     }
 
-    operandoSuma() {
+    operandoSuma(e) {
+        e.preventDefault()
         this.checkOperation('+');
     }
 
-    operandoResta() {
+    operandoResta(e) {
+        e.preventDefault()
         this.checkOperation('-');
     }
 
-    operandoMultiplicacion() {
+    operandoMultiplicacion(e) {
+        e.preventDefault()
         this.checkOperation('x');
     }
 
-    operandoDivision() {
+    operandoDivision(e) {
+        e.preventDefault()
         this.checkOperation('/');
     }
 
-    checkOperation(operation: any) {
+    answerIsCorrect(operation: any) {
+        return false;
+    }
 
+    checkOperation(operation: any) {
+        
+        if (this.answerIsCorrect(operation)) {
+            alert("Elegiste correctamente!");
+        } else {
+            this.newGame();
+        }
+        
     }
 
 }
