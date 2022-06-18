@@ -11746,8 +11746,7 @@ html {
 }
 
 .operando-mini-box {
-
-  padding: 20px;
+white-space: pre-line;
   font-size: 6rem;
   color: black;
 
@@ -11755,15 +11754,13 @@ html {
 
 #operando-desconocido {
   border: 1px solid gray;
-  padding: 0px;
-  margin: 0 auto;
-  width: 100px;
-  margin-top: 18px;
   color: #1676a0;
+  padding: 0 35px;
 }
 
 @media (max-width: 	1199px) {
   #operando-desconocido {
     border: 0px;
+    padding: 0 5px;
   }
 }

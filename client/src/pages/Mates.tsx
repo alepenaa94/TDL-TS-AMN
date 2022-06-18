@@ -28,21 +28,21 @@ export default class Mates extends IGame {
 
                         <h2 className="page-section-heading text-center text-uppercase mb-0 operando-header">¿Qué tal las matemáticas?</h2>
 
-                        <div className="row justify-content-center formula">
-                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                <div className="text-center operando-mini-box" id="operando-numero-1">?</div>
+                        <div className="d-flex justify-content-center formula">
+                            <div className="p-2">
+                                <p className="operando-mini-box" id="operando-numero-1">?</p>
                             </div>
-                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                <div className="text-center operando-mini-box" id="operando-desconocido" ref={elem => this.operando = elem}>?</div>
+                            <div className="p-2">
+                                <p className="operando-mini-box" id="operando-desconocido" ref={elem => this.operando = elem}>?</p>
                             </div>
-                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                <div className="text-center operando-mini-box" id="operando-numero-2">?</div>
+                            <div className="p-2">
+                                <p className="operando-mini-box" id="operando-numero-2">?</p>
                             </div>
-                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                <div className="text-center operando-mini-box" id="operando-igual">=</div>
+                            <div className="p-2">
+                                <p className="operando-mini-box" id="operando-igual">=</p>
                             </div>
-                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                <div className="text-center operando-mini-box" id="operando-resultado">?</div>
+                            <div className="p-2">
+                                <p className="operando-mini-box" id="operando-resultado">?</p>
                             </div>
                         </div>
 
