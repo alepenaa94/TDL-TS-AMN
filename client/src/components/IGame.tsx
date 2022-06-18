@@ -46,7 +46,7 @@ abstract class IGame extends React.Component {
             return (
                 <div>
                     {this.defaultRender()}
-                    <Popup ref={this.pop_win} wait={300} path_r="/" mensaje="Ganaste!!" />
+                    <Popup ref={this.pop_win} wait={300} path_r="/" mensaje="Ganaste!!!" />
                     <Popup ref={this.pop_end} wait={300} path_r="/" mensaje="Perdiste :(" />
                 </div>
             );

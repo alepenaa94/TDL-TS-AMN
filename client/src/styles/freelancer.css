@@ -11681,14 +11681,6 @@ html {
   margin-top: 60px !important;
 }
 
-
-
-
-
-
-
-
-
 .popup-container {
   background-color: rgba(0, 0, 0, 0.3);
   position: fixed;
@@ -11726,4 +11718,52 @@ html {
 
 .popup button:focus {
   outline: 0;
+}
+
+
+/* MATES */
+.operando {
+  text-align: center;
+  width: 200px;
+  height: 200px;
+  margin: 5px;
+  font-size: 6rem;
+}
+
+.operando-header {
+  text-align: center;
+  margin-top: 60px;
+  color: black;
+  margin-bottom: -40px !important;
+}
+
+.formula {
+
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background-color: white;
+
+}
+
+.operando-mini-box {
+
+  padding: 20px;
+  font-size: 6rem;
+  color: black;
+
+}
+
+#operando-desconocido {
+  border: 1px solid gray;
+  padding: 0px;
+  margin: 0 auto;
+  width: 100px;
+  margin-top: 18px;
+  color: #1676a0;
+}
+
+@media (max-width: 	1199px) {
+  #operando-desconocido {
+    border: 0px;
+  }
 }

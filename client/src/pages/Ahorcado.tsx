@@ -79,7 +79,7 @@ class Ahorcado extends IGame {
         return (
             <div className="container">
                 <div className="row justify-content-center">
-                    <section id="ahorcado" className='amn-page text-center h1'> ESTE ES EL JUEGO DEL AHORCADO. 
+                    <section id="ahorcado" className='amn-page text-center h1'> AHORCADO
                         <div className='game-container'>
                             
                             <Figura ref={this.figura} />
