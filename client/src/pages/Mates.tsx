@@ -10,6 +10,10 @@ type Operando = {
   vidas_restantes: any;
 }
 
+type OperandoCheck = {
+    vidas_restantes: any;
+}
+
 export default class Mates extends IGame {
 
     /* Esta informacion se utiliza solo para mostrarla, no se almacenan "realmente" las vidas o resultados reales. */
@@ -71,8 +75,9 @@ export default class Mates extends IGame {
     }
 
     newGame() {
-        request<Operando>("http://localhost:9000/v0/math/"+this.props.jugador_id).then(mates => {
+        request<Operando>("http://localhost:9000/v0/math/"+this.props.jugador_id).then(m => {
 
+            let mates = m.data;
             this.operando1 = document.getElementById('operando-numero-1') as HTMLInputElement | null;
             this.operando2 = document.getElementById('operando-numero-2') as HTMLInputElement | null;
             this.resultado = document.getElementById('operando-resultado') as HTMLInputElement | null;
@@ -99,36 +104,56 @@ export default class Mates extends IGame {
 
     operandoSuma(e) {
         e.preventDefault()
-        this.checkOperation('+');
+        this.checkOperator('+');
     }
 
     operandoResta(e) {
         e.preventDefault()
-        this.checkOperation('-');
+        this.checkOperator('-');
     }
 
     operandoMultiplicacion(e) {
         e.preventDefault()
-        this.checkOperation('x');
+        this.checkOperator('*');
     }
 
     operandoDivision(e) {
         e.preventDefault()
-        this.checkOperation('/');
+        this.checkOperator('/');
     }
 
-    answerIsCorrect(operation: any) {
-        return false;
+    answerIsCorrect(vidas_disponibles: any) {
+        return this.vidas_restantes == vidas_disponibles; 
     }
 
-    checkOperation(operation: any) {
+    gameLost(vidas_disponibles) {
+        return vidas_disponibles == 0;
+    }
+
+    checkOperator(operator: any) {
         
-        if (this.answerIsCorrect(operation)) {
-            alert("Elegiste correctamente!");
-        } else {
-            this.newGame();
-        }
-        
+        request<OperandoCheck>("http://localhost:9000/v0/math/"+this.props.jugador_id+"?operator="+operator).then(oc => {
+            
+            console.log(oc.success);
+            let operator_check = oc.data;
+
+            if (oc.success) {
+            
+                alert("Correcto! Has ganado! Se iniciará una nueva partida.");
+                this.newGame();
+            
+            } else {
+            
+                alert("Incorrecto!");
+                this.vidas_restantes.innerHTML = operator_check["available_life"];
+
+                if (this.gameLost(operator_check["available_life"])) {
+                    alert("Has perdido!");
+                    this.newGame();
+                }
+
+            }
+        });
     }
 
 }

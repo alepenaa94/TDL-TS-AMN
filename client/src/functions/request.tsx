@@ -4,7 +4,7 @@ export default function request<TResponse>(
 ): Promise<TResponse> {
   return fetch(url, config)
     .then(response => response.json())
-    .then(data => data.data)
+    .then(data => data)
     .catch(error => {
       alert("Parece que hubo un error: "+error);
     })
