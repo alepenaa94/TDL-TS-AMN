@@ -1,22 +1,27 @@
 import IGame from "../components/IGame.tsx";
 import Button from 'react-bootstrap/Button';
+import request from '../functions/request.tsx';
 import {Howl, Howler} from 'howler';
-import VacaSound from "../sounds/animals/vaca.wav";
-import CaballoSound from "../sounds/animals/caballo.wav";
-import PerroSound from "../sounds/animals/perro.wav";
-import GatoSound from "../sounds/animals/gato.wav";
+import Sound1 from "../sounds/animals/1.wav";
+import Sound2 from "../sounds/animals/2.wav";
+import Sound3 from "../sounds/animals/3.wav";
+import Sound4 from "../sounds/animals/4.wav";
+
+type AnimalSound = {   
+    audio_id: any;
+    available_lifes: any;
+}
 
 class Grrr extends IGame {
 
     private sound: any = null;
-    private animalVaca: any = null;
-    private animalPerro: any = null;
-    private animalGato: any = null;
-    private animalCaballo: any = null;
+    private sound_map: any = null;
+    private vidas_restantes: any = null;
 
     constructor(props:any){
         super(props);
         this.answer = this.answer.bind(this);
+        this.loadSoundMap();
         this.newGame();
     }
 
@@ -28,20 +33,60 @@ class Grrr extends IGame {
         this.sound.stop();
     }
 
+    loadSoundMap() {
+        
+        this.sound_map = {
+            '1': Sound1,
+            '2': Sound2,
+            '3': Sound3,
+            '4': Sound4,
+        };
+
+    }
+
     newGame() {
 
-        //por ahora es constante
-        let srcSound = VacaSound;
+        request<AnimalSound>("http://localhost:9000/v0/audio/"+this.props.jugador_id).then(a => {
 
-        this.sound = new Howl({
-            src: [srcSound],
-            volume: 1,
+            let animal = a.data;
+            this.vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
+
+            if (this.vidas_restantes != null) {
+                this.vidas_restantes.innerHTML = animal['available_life'];
+            }
+
+            this.sound = new Howl({
+                src: [this.sound_map[animal['audio_id']]],
+                volume: 1,
+            })
+
         })
     }
 
+    seAcabaronLasVidas(vidas: any) {
+        return vidas == 0;
+    }
+
     answer = (e: any, animal: string) => {
+
         e.preventDefault();
-        alert(animal);
+        
+        request<AnimalSound>("http://localhost:9000/v0/audio/"+this.props.jugador_id+'/'+animal).then(a => {
+
+            let animal_answer = a.data;
+            this.vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
+
+            if (this.seAcabaronLasVidas(animal_answer['available_life'])) {
+                this.vidas_restantes.innerHTML = 0;
+                alert(animal_answer['message']);
+                this.newGame();
+            } else {
+                alert("Correcto! Has acertado!");
+                this.newGame();
+            }
+
+        })
+
     }
 
     defaultRender(): ReactNode {
