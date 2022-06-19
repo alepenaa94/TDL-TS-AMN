@@ -9,25 +9,39 @@ import GatoSound from "../sounds/animals/gato.wav";
 class Grrr extends IGame {
 
     private sound: any = null;
+    private animalVaca: any = null;
+    private animalPerro: any = null;
+    private animalGato: any = null;
+    private animalCaballo: any = null;
 
     constructor(props:any){
         super(props);
-        this.sound = new Howl({
-            src: [VacaSound],
-            volume: 1,
-        });
+        this.answer = this.answer.bind(this);
+        this.newGame();
     }
 
     SoundPlay() {
-
         this.sound.play();
-
     }
 
     SoundStop() {
-
         this.sound.stop();
+    }
 
+    newGame() {
+
+        //por ahora es constante
+        let srcSound = VacaSound;
+
+        this.sound = new Howl({
+            src: [srcSound],
+            volume: 1,
+        })
+    }
+
+    answer = (e: any, animal: string) => {
+        e.preventDefault();
+        alert(animal);
     }
 
     defaultRender(): ReactNode {
@@ -53,10 +67,10 @@ class Grrr extends IGame {
                             <div className="p-2 vidas-restantes-box">Vidas restantes: </div>
                         </div>
                         <div className="d-flex flex-wrap justify-content-center animales-box">
-                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-gato" onClick={this.answerGato}>Gato</Button></div>
-                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-perro" onClick={this.answerPerro}>Perro</Button></div>
-                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-vaca" onClick={this.answerVaca}>Vaca</Button></div>
-                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-caballo" onClick={this.answerCaballo}>Caballo</Button></div>
+                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-gato" onClick={e => this.answer(e, 'gato')}>Gato</Button></div>
+                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-perro" onClick={e => this.answer(e, 'perro')}>Perro</Button></div>
+                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-vaca" onClick={e => this.answer(e, 'vaca')}>Vaca</Button></div>
+                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-caballo" onClick={e => this.answer(e, 'caballo')}>Caballo</Button></div>
                         </div>
 
                     </div>

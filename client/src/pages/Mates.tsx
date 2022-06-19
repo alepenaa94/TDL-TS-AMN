@@ -25,10 +25,7 @@ export default class Mates extends IGame {
 
     constructor(props: any) {
         super(props);
-        this.operandoSuma = this.operandoSuma.bind(this);
-        this.operandoResta = this.operandoResta.bind(this);
-        this.operandoMultiplicacion = this.operandoMultiplicacion.bind(this);
-        this.operandoDivision = this.operandoDivision.bind(this);
+        this.answer = this.answer.bind(this);
         this.newGame();
     }
 
@@ -62,10 +59,10 @@ export default class Mates extends IGame {
                             <div className="p-2 vidas-restantes-box">Vidas restantes: </div>
                         </div>
                         <div className="row operandos-box">
-                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-suma" onClick={this.operandoSuma}>+</Button></div>
-                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-resta" onClick={this.operandoResta}>—</Button></div>
-                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-multiplicacion" onClick={this.operandoMultiplicacion}>x</Button></div>
-                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-division" onClick={this.operandoDivision}>/</Button></div>
+                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-suma" onClick={e => this.answer(e, '+')}>+</Button></div>
+                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-resta" onClick={e => this.answer(e, '-')}>—</Button></div>
+                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-multiplicacion" onClick={e => this.answer(e, '*')}>x</Button></div>
+                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-division" onClick={e => this.answer(e, '/')}>/</Button></div>
                         </div>
 
                     </div>
@@ -102,24 +99,9 @@ export default class Mates extends IGame {
         })
     }
 
-    operandoSuma(e) {
-        e.preventDefault()
-        this.checkOperator('+');
-    }
-
-    operandoResta(e) {
-        e.preventDefault()
-        this.checkOperator('-');
-    }
-
-    operandoMultiplicacion(e) {
-        e.preventDefault()
-        this.checkOperator('*');
-    }
-
-    operandoDivision(e) {
-        e.preventDefault()
-        this.checkOperator('/');
+    answer = (e: any, operator: string) => {
+        e.preventDefault();
+        this.checkOperator(operator);
     }
 
     answerIsCorrect(vidas_disponibles: any) {
