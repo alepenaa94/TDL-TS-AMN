@@ -1,13 +1,37 @@
 import IGame from "../components/IGame.tsx";
 import Button from 'react-bootstrap/Button';
+import {Howl, Howler} from 'howler';
+import VacaSound from "../sounds/animals/vaca.wav";
+import CaballoSound from "../sounds/animals/caballo.wav";
+import PerroSound from "../sounds/animals/perro.wav";
+import GatoSound from "../sounds/animals/gato.wav";
 
 class Grrr extends IGame {
 
+    private sound: any = null;
+
     constructor(props:any){
         super(props);
+        this.sound = new Howl({
+            src: [VacaSound],
+            volume: 1,
+        });
     }
 
-defaultRender(): ReactNode {
+    SoundPlay() {
+
+        this.sound.play();
+
+    }
+
+    SoundStop() {
+
+        this.sound.stop();
+
+    }
+
+    defaultRender(): ReactNode {
+
         return (
             <div className="container">
                 <section className="page-section mb-0" id="grrr-container">
@@ -21,18 +45,18 @@ defaultRender(): ReactNode {
                             </div>
                         </div>
                         <div className="d-flex flex-wrap justify-content-center animales-box">
-                            <div className="p-2 animal-box"><Button variant="secondary" id="animal-play" onClick={this.play}>Play</Button></div>
-                            <div className="p-2 animal-box"><Button variant="secondary" id="animal-stop" onClick={this.stop}>Stop</Button></div>
+                            <div className="p-2 animal-box"><Button variant="secondary" id="animal-play" onClick={() => this.SoundPlay()}>Play</Button></div>
+                            <div className="p-2 animal-box"><Button variant="secondary" id="animal-stop" onClick={() => this.SoundStop()}>Stop</Button></div>
                         </div>
                         <div className="d-flex flex-row-reverse">
                             <div className="p-2 vidas-restantes-box vidas-restantes-box-number" id="vidas-restantes">?</div>
                             <div className="p-2 vidas-restantes-box">Vidas restantes: </div>
                         </div>
                         <div className="d-flex flex-wrap justify-content-center animales-box">
-                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-gato" onClick={this.gato}>Gato</Button></div>
-                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-perro" onClick={this.perro}>Perro</Button></div>
-                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-vaca" onClick={this.vaca}>Vaca</Button></div>
-                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-caballo" onClick={this.caballo}>Caballo</Button></div>
+                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-gato" onClick={this.answerGato}>Gato</Button></div>
+                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-perro" onClick={this.answerPerro}>Perro</Button></div>
+                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-vaca" onClick={this.answerVaca}>Vaca</Button></div>
+                            <div className="p-2 animal-box"><Button variant="primary" className="animal" id="animal-caballo" onClick={this.answerCaballo}>Caballo</Button></div>
                         </div>
 
                     </div>

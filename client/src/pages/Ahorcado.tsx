@@ -13,13 +13,15 @@ class Ahorcado extends IGame {
     private figura:any = null;
     private letras_cargadas:Array<string> = [];
 
-    constructor(props:any){
+    constructor(props:any) {
+
         super(props);
         this.pal_ofsc = React.createRef();
         this.figura = React.createRef();
         this.letras_err = React.createRef();
 
         window.addEventListener('keydown',this.handleKeydown);
+        
     }
 
 
