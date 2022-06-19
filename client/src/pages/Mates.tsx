@@ -62,10 +62,10 @@ export default class Mates extends IGame {
                             <div className="p-2 vidas-restantes-box">Vidas restantes: </div>
                         </div>
                         <div className="row operandos-box">
-                            <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-suma" onClick={this.operandoSuma}>+</Button></div>
-                            <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-resta" onClick={this.operandoResta}>—</Button></div>
-                            <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-multiplicacion" onClick={this.operandoMultiplicacion}>x</Button></div>
-                            <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-division" onClick={this.operandoDivision}>/</Button></div>
+                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-suma" onClick={this.operandoSuma}>+</Button></div>
+                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-resta" onClick={this.operandoResta}>—</Button></div>
+                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-multiplicacion" onClick={this.operandoMultiplicacion}>x</Button></div>
+                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-division" onClick={this.operandoDivision}>/</Button></div>
                         </div>
 
                     </div>
