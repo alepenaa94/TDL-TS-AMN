@@ -11797,3 +11797,31 @@ white-space: pre-line;
     margin-right: 50px;
   }
 }
+
+
+.escribo-header {
+  text-align: center;
+  margin-top: 60px;
+  color: black;
+  margin-bottom: -40px !important;
+}
+
+.escribo-box {
+  white-space: pre-line;
+    font-size: 6rem;
+    color: black;
+  
+  }
+
+.escribo-btn {
+  text-align: center;
+  width: auto;
+  height: 180px;
+  margin: 5px;
+  font-size: 6rem;
+}
+
+.me-6 {
+  margin-right: 9rem !important;
+}
+
