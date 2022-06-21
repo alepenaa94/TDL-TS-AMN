@@ -48,7 +48,7 @@ export class WordService extends CommonService {
           success: true,
           data: {
             location: positions,
-            available_life: playerExists.data.result[0].available_life
+            available_life: playerExists.data.result[0].available_life,
           },
         }
       } else {

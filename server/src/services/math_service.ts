@@ -101,8 +101,8 @@ export class MathService extends CommonService {
 
       //Se actualiza la tabla de juego y vidas
       const sql_gameinplay =
-        'INSERT INTO gameinplay(id_player, id_game, available_life) VALUES ($1, 2, 3) ' +
-        'ON CONFLICT (id_player, id_game) DO UPDATE SET available_life = 3 returning id_player, id_game'
+        'INSERT INTO gameinplay(id_player, id_game, available_life) VALUES ($1, 2, 1) ' +
+        'ON CONFLICT (id_player, id_game) DO UPDATE SET available_life = 1 returning id_player, id_game'
       const gameinplayParams = [id_player]
       await pool.aquery(this.user_current, sql_gameinplay, gameinplayParams)
       // commit if there is a transaction
