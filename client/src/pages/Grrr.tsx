@@ -1,4 +1,5 @@
 import IGame from "../components/IGame.tsx";
+import { ReactNode } from "react";
 import Button from 'react-bootstrap/Button';
 import request from '../functions/request.tsx';
 import {Howl, Howler} from 'howler';
@@ -8,15 +9,14 @@ import Sound3 from "../sounds/animals/3.wav";
 import Sound4 from "../sounds/animals/4.wav";
 
 type AnimalSound = {   
-    audio_id: any;
-    available_lifes: any;
+    audio_id: string;
+    available_lifes: number;
 }
 
-class Grrr extends IGame {
+export default class Grrr extends IGame {
 
-    private sound: any = null;
-    private sound_map: any = null;
-    private vidas_restantes: any = null;
+    private sound: Howl;
+    private sound_map: {[key: string]: number};
 
     constructor(props:any){
         super(props);
@@ -49,10 +49,10 @@ class Grrr extends IGame {
         request<AnimalSound>("http://localhost:9000/v0/audio/"+this.props.jugador_id).then(a => {
 
             let animal = a.data;
-            this.vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
+            let vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
 
-            if (this.vidas_restantes != null) {
-                this.vidas_restantes.innerHTML = animal['available_life'];
+            if (vidas_restantes != null) {
+                vidas_restantes.innerHTML = animal['available_life'];
             }
 
             this.sound = new Howl({
@@ -63,26 +63,25 @@ class Grrr extends IGame {
         })
     }
 
-    seAcabaronLasVidas(vidas: any) {
+    seAcabaronLasVidas(vidas: number) {
         return vidas == 0;
     }
 
     answer = (e: any, animal: string) => {
 
         e.preventDefault();
-        
+        this.SoundStop();
+
         request<AnimalSound>("http://localhost:9000/v0/audio/"+this.props.jugador_id+'/'+animal).then(a => {
 
             let animal_answer = a.data;
-            this.vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
+            let vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
 
-            if (this.seAcabaronLasVidas(animal_answer['available_life'])) {
-                this.vidas_restantes.innerHTML = 0;
-                alert(animal_answer['message']);
-                this.newGame();
+            if ((this.seAcabaronLasVidas(animal_answer['available_life'])) && (vidas_restantes != null)){
+                vidas_restantes.innerHTML = '0';
+                super.setState({end_game:true});
             } else {
-                alert("Correcto! Has acertado!");
-                this.newGame();
+                super.setState({win_game:true});
             }
 
         })
@@ -124,5 +123,3 @@ class Grrr extends IGame {
         );
     }
 }
-
-export default Grrr; 

@@ -1,27 +1,21 @@
 import IGame from "../components/IGame.tsx";
 import request from "../functions/request.tsx";
 import React from "react";
+import { ReactNode } from "react";
 import Button from 'react-bootstrap/Button';
 
 type Operando = {
-  operando1: any;
-  operando2: any;
-  resultado: any;
-  vidas_restantes: any;
+  operando1: number;
+  operando2: number;
+  resultado: number;
+  vidas_restantes: number;
 }
 
 type OperandoCheck = {
-    vidas_restantes: any;
+    vidas_restantes: number;
 }
 
 export default class Mates extends IGame {
-
-    /* Esta informacion se utiliza solo para mostrarla, no se almacenan "realmente" las vidas o resultados reales. */
-    private operando: any = null;
-    private operando1: any = null;
-    private operando2: any = null;
-    private resultado: any = null;
-    private vidas_restantes: any = null;
 
     constructor(props: any) {
         super(props);
@@ -75,25 +69,25 @@ export default class Mates extends IGame {
         request<Operando>("http://localhost:9000/v0/math/"+this.props.jugador_id).then(m => {
 
             let mates = m.data;
-            this.operando1 = document.getElementById('operando-numero-1') as HTMLInputElement | null;
-            this.operando2 = document.getElementById('operando-numero-2') as HTMLInputElement | null;
-            this.resultado = document.getElementById('operando-resultado') as HTMLInputElement | null;
-            this.vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
+            let operando1 = document.getElementById('operando-numero-1') as HTMLInputElement | null;
+            let operando2 = document.getElementById('operando-numero-2') as HTMLInputElement | null;
+            let resultado = document.getElementById('operando-resultado') as HTMLInputElement | null;
+            let vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
 
-            if (this.operando1 != null) {
-                this.operando1.innerHTML = mates['operando1'];
+            if (operando1 != null) {
+                operando1.innerHTML = mates['operando1'];
             }
 
-            if (this.operando2 != null) {
-                this.operando2.innerHTML = mates['operando2'];
+            if (operando2 != null) {
+                operando2.innerHTML = mates['operando2'];
             }
 
-            if (this.resultado != null) {
-                this.resultado.innerHTML = mates['resultado'];
+            if (resultado != null) {
+                resultado.innerHTML = mates['resultado'];
             }
 
-            if (this.vidas_restantes != null) {
-                this.vidas_restantes.innerHTML = mates['available_life'];
+            if (vidas_restantes != null) {
+                vidas_restantes.innerHTML = mates['available_life'];
             }
 
         })
@@ -104,38 +98,37 @@ export default class Mates extends IGame {
         this.checkOperator(operator);
     }
 
-    answerIsCorrect(vidas_disponibles: any) {
-        return this.vidas_restantes == vidas_disponibles; 
-    }
+    checkOperator(operator_client: string) {
 
-    gameLost(vidas_disponibles) {
-        return vidas_disponibles == 0;
-    }
+        request<OperandoCheck>("http://localhost:9000/v0/math/"+this.props.jugador_id, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                operator: operator_client
+            })})
+            .then(data => {
 
-    checkOperator(operator: any) {
+                if (data.success == true) {
         
-        request<OperandoCheck>("http://localhost:9000/v0/math/"+this.props.jugador_id+"?operator="+operator).then(oc => {
-            
-            console.log(oc.success);
-            let operator_check = oc.data;
+                    super.setState({win_game:true});
 
-            if (oc.success) {
-            
-                alert("Correcto! Has ganado! Se iniciará una nueva partida.");
-                this.newGame();
-            
-            } else {
-            
-                alert("Incorrecto!");
-                this.vidas_restantes.innerHTML = operator_check["available_life"];
+                } else {
 
-                if (this.gameLost(operator_check["available_life"])) {
-                    alert("Has perdido!");
-                    this.newGame();
+                    let vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
+        
+                    if (vidas_restantes != null) {
+                        vidas_restantes.innerHTML = data.data["available_life"];
+                    }
+
+                    super.setState({end_game:true});
+
                 }
-
             }
-        });
+        );
+
     }
 
 }

@@ -1,5 +1,4 @@
 import IGame from "../components/IGame.tsx";
-
 import Figura from '../components/ahorcado/Figura.tsx';
 import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada.tsx';
 import LetrasErroneas from '../components/ahorcado/LetrasErroneas.tsx';

@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import Popup from './Popup.tsx';
 
 
-abstract class IGame extends React.Component {
+abstract class IGame extends React.Component<any, any> {
     private pop_end:any = null;
     private pop_win:any = null;
     
