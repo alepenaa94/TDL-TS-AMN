@@ -3,7 +3,6 @@ import { Navigate } from "react-router";
 
 class Login extends React.Component {
 
-
     constructor(props) {
         super(props);
         this.state = {

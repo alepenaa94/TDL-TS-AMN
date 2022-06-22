@@ -1,27 +1,14 @@
 import React from "react";
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
-// @ts-ignore
 import Header from "./components/Header.tsx";
-// @ts-ignore
 import Home from "./pages/Home.tsx";
-// @ts-ignore
 import Ahorcado from "./pages/Ahorcado.tsx";
-// @ts-ignore
 import Grrr from "./pages/Grrr.tsx";
-// @ts-ignore
 import Mates from "./pages/Mates.tsx";
-// @ts-ignore
 import Escribo from "./pages/Escribo.tsx";
-// @ts-ignore
 import Error404 from "./pages/Error404.tsx";
-// @ts-ignore
 import Footer from "./components/Footer.tsx";
-// @ts-ignore
 import Login from "./pages/Login.tsx";
-
-
-
-
 
 class App extends React.Component {
 

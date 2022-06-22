@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 class PalabraOfuscada extends React.Component {
     private word_left:number=0;
     constructor(props:any){

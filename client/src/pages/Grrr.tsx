@@ -2,7 +2,7 @@ import IGame from "../components/IGame.tsx";
 import { ReactNode } from "react";
 import Button from 'react-bootstrap/Button';
 import request from '../functions/request.tsx';
-import {Howl, Howler} from 'howler';
+import {Howl} from 'howler';
 import Sound1 from "../sounds/animals/1.wav";
 import Sound2 from "../sounds/animals/2.wav";
 import Sound3 from "../sounds/animals/3.wav";

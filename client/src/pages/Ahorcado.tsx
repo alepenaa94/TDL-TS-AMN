@@ -3,8 +3,6 @@ import Figura from '../components/ahorcado/Figura.tsx';
 import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada.tsx';
 import LetrasErroneas from '../components/ahorcado/LetrasErroneas.tsx';
 import React from "react";
-import { message } from '../../../server/src/constants/messages/index';
-
 
 class Ahorcado extends IGame {
     private pal_ofsc:any = null;
