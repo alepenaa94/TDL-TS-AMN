@@ -1,9 +1,8 @@
 import IGame from "../components/IGame";
 import request from "../functions/request";
-import React from "react";
+import React, { ReactNode } from "react";
 import Button from 'react-bootstrap/Button';
 import Gen_prop from "../components/types/gen_prop";
-import IGame_state from "../components/types/igame_state";
 import IGame_state from "../components/types/igame_state";
 
 
@@ -42,7 +41,7 @@ class Escribo extends IGame<Esc_state> {
     }
 
     newGame() {
-        request<Word>("http://localhost:9000/v0/ortografia/"+this.props.jugador_id).then(m => {
+        request<Word>("http://lwcalhost:9000/v0/ortografia/"+this.props.jugador_id).then(m => {
 
             let _palabra:data|any = m.data;
             this.setState({data:{palabra:_palabra['word'],
@@ -54,17 +53,17 @@ class Escribo extends IGame<Esc_state> {
 
     checkWord(opcion: any) {
         console.log(opcion);
-        request<WordCheck>("http://localhost:9000/v0/ortografia/"+this.props.jugador_id+"/"+opcion.toString()).then(oc => {
-            console.log(oc);
-            if (oc.success) {
+        request<WordCheck>("http://lwcalhost:9000/v0/ortografia/"+this.props.jugador_id+"/"+opcion.toString()).then(wc => {
+            console.log(wc);
+            if (wc.success) {
                 this.setState({win_game:true});
             
             } else {
             
                 alert("Incorrecto!");
-                this.setState({data:{vidas_restantes:oc.data['available_life']}});
+                this.setState({data:{vidas_restantes:wc?.data?.available_life}});
 
-                if (oc.data['available_life']==0){
+                if (wc?.data?.available_life==0){
                     alert("Has perdido!");
                     this.setState({end_game:true});
                 } else {
@@ -88,7 +87,7 @@ class Escribo extends IGame<Esc_state> {
 
                     <div className="d-flex justify-content-center formula">
                         <div className="p-2">
-                            <p className="escribo-box" id="palabra-escribo">{this.state.palabra}</p>
+                            <p className="escribo-box" id="palabra-escribo">{this.state.data?.palabra}</p>
                         </div>
                     </div>
                     <div className="center">
@@ -102,7 +101,7 @@ class Escribo extends IGame<Esc_state> {
                         </div>
                     </div>
                     <div className="d-flex flex-row-reverse">
-                        <div className="p-2 vidas-restantes-box" id="vidas-restantes">{this.state.vidas_restantes}</div>
+                        <div className="p-2 vidas-restantes-box" id="vidas-restantes">{this.state.data?.vidas_restantes}</div>
                         <div className="p-2 vidas-restantes-box">Vidas restantes: </div>
                     </div>
                 </div>

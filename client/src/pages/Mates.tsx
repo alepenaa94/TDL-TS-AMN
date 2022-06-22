@@ -1,20 +1,27 @@
-import IGame from "../components/IGame.tsx";
-import request from "../functions/request.tsx";
-import React from "react";
+import IGame from "../components/IGame";
+import request from "../functions/request";
+import React, { ReactNode } from "react";
 import Button from 'react-bootstrap/Button';
 
 type Operando = {
-  operando1: any;
-  operando2: any;
-  resultado: any;
-  vidas_restantes: any;
+    data: {
+        operando1: any,
+        operando2: any,
+        resultado: any,
+        vidas_restantes: any,
+        available_life:any
+    }
 }
 
 type OperandoCheck = {
-    vidas_restantes: any;
+    success:boolean
+    data: {
+        vidas_restantes: any,
+        available_life:any
+    }
 }
 
-export default class Mates extends IGame {
+export default class Mates extends IGame<{}> {
 
     /* Esta informacion se utiliza solo para mostrarla, no se almacenan "realmente" las vidas o resultados reales. */
     private operando: any = null;
@@ -108,7 +115,7 @@ export default class Mates extends IGame {
         return this.vidas_restantes == vidas_disponibles; 
     }
 
-    gameLost(vidas_disponibles) {
+    gameLost(vidas_disponibles: number) {
         return vidas_disponibles == 0;
     }
 

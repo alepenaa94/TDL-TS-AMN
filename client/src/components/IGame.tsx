@@ -12,17 +12,19 @@ abstract class IGame<T> extends React.Component<Gen_prop,IGame_state<T>> {
     
     constructor(props:Gen_prop) {
         super(props);
-        let _state = {
+        this.state = {
             end_game: false,
             win_game:false,
             login: false
-        }
-        this.setState(_state);
+        };
         this.pop_end = React.createRef();
         this.pop_win = React.createRef();
     }
 
+    didMount():void{}
+
     componentDidMount() {
+        this.didMount();
         //  veamos antes de cargar algo si tenemos el login hecho
         this.props.app.callback_jugador(this.props.id_game);
     }

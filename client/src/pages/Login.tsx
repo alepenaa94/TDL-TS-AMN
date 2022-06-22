@@ -1,16 +1,25 @@
 import React from "react";
 import { Navigate } from "react-router";
+import Gen_prop from "../components/types/gen_prop";
 
-class Login extends React.Component {
+
+type Login_state = {
+    jugador_id:number,
+    need_return : boolean,
+    path:string,
+    nombre:string
+}
+
+class Login extends React.Component<Gen_prop,Login_state> {
 
 
-    constructor(props) {
+    constructor(props:Gen_prop) {
         super(props);
         this.state = {
             jugador_id:-1,
             need_return : false,
             path:'',
-            nomnre:'default'
+            nombre:'default'
         }
         this.clickHandler = this.clickHandler.bind(this);
         this.updateInput = this.updateInput.bind(this);
@@ -21,7 +30,7 @@ class Login extends React.Component {
         this.setState({jugador_id:new_id});
     }
 
-    updateInput(event){
+    updateInput(event: { target: { value: string; }; }){
         this.setState({nombre : event.target.value})
     }
 
@@ -39,7 +48,7 @@ class Login extends React.Component {
             })
         })
         .then((response) => {
-            if(!response.ok) throw new Error(response.status);
+            if(!response.ok) throw new Error(response.statusText);
             else return response.json();
             })
         .catch((error) => {

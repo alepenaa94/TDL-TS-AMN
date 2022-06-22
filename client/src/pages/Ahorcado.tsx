@@ -4,23 +4,33 @@ import Figura from '../components/ahorcado/Figura';
 import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada';
 import LetrasErroneas from '../components/ahorcado/LetrasErroneas';
 import React, { ReactNode } from "react";
+import Gen_prop from "../components/types/gen_prop";
 
-class Ahorcado extends IGame {
+
+
+
+
+class Ahorcado extends IGame<{}> {
     private pal_ofsc:any = null;
     private letras_err:any = null;
     private figura:any = null;
     private letras_cargadas:Array<string> = [];
 
-    constructor(props:any) {
-
+    constructor(props:Gen_prop) {
         super(props);
         this.pal_ofsc = React.createRef();
         this.figura = React.createRef();
         this.letras_err = React.createRef();
 
-        window.addEventListener('keydown',this.handleKeydown);
+        
         
     }
+
+    didMount():void {
+        console.log("hola");
+        window.addEventListener('keydown',this.handleKeydown);
+    }
+    
 
 
     componentWillUnmount() {

@@ -1,24 +1,29 @@
-import IGame from "../components/IGame.tsx";
+import IGame from "../components/IGame";
 import Button from 'react-bootstrap/Button';
-import request from '../functions/request.tsx';
+import request from '../functions/request';
 import {Howl, Howler} from 'howler';
 import Sound1 from "../sounds/animals/1.wav";
 import Sound2 from "../sounds/animals/2.wav";
 import Sound3 from "../sounds/animals/3.wav";
 import Sound4 from "../sounds/animals/4.wav";
+import Gen_prop from "../components/types/gen_prop";
+import { ReactNode } from "react";
 
-type AnimalSound = {   
-    audio_id: any;
-    available_lifes: any;
+type AnimalSound = {
+    data: {
+        audio_id: any,
+        available_life: any,
+        message:any
+    }
 }
 
-class Grrr extends IGame {
+class Grrr extends IGame<{}> {
 
     private sound: any = null;
     private sound_map: any = null;
     private vidas_restantes: any = null;
 
-    constructor(props:any){
+    constructor(props:Gen_prop){
         super(props);
         this.answer = this.answer.bind(this);
         this.loadSoundMap();
