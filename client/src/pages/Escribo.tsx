@@ -44,7 +44,7 @@ class Escribo extends IGame<Esc_state> {
     newGame() {
         request<Word>("http://localhost:9000/v0/ortografia/"+this.props.jugador_id).then(m => {
 
-            let _palabra:data = m.data;
+            let _palabra:data|any = m.data;
             this.setState({data:{palabra:_palabra['word'],
                                  vidas_restantes:_palabra['available_life']}});
 
