@@ -21,13 +21,24 @@ import Login from "./pages/Login.tsx";
 
 
 
+interface App_state {
+  ahorcado_id: number,
+  grrr_id: number,
+  mates_id: number,
+  escribo_id: number,
+  jugador_id: number,
+
+  show_p: boolean,
+  last_path:string
+}
 
 
-class App extends React.Component {
+
+class App extends React.Component<{},App_state> {
 
   private ref_popup:any = null;
   
-  constructor(props:any) {
+  constructor(props: {} | Readonly<{}>) {
     super(props);
     
     this.ref_popup = React.createRef();
@@ -51,7 +62,7 @@ class App extends React.Component {
   componentDidMount(): void {
     fetch("http://localhost:9000/v0/games")
     .then((response) => {
-      if(!response.ok) throw new Error(response.status);
+      if(!response.ok) throw new Error(response.statusText);
       else return response.json();
     })
     .then(data => {
@@ -107,7 +118,7 @@ class App extends React.Component {
           })
       })
       .then((response) => {
-          if(!response.ok) throw new Error(response.status);
+          if(!response.ok) throw new Error(response.statusText);
           else return response.json();
         })
       .then(data => {

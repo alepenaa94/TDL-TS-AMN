@@ -1,22 +1,39 @@
-import IGame from "../components/IGame.tsx";
-import request from "../functions/request.tsx";
+import IGame from "../components/IGame";
+import request from "../functions/request";
 import React from "react";
 import Button from 'react-bootstrap/Button';
+import Gen_prop from "../components/types/gen_prop";
+import IGame_state from "../components/types/igame_state";
+import IGame_state from "../components/types/igame_state";
 
-type Word = {
-    word: any,
-    available_life: any;
+
+type data = {
+    word?:string,
+    available_life?:number
+}
+
+interface Word {
+    success?:boolean,
+    data?: data,
+    word?: string,
+    available_life?: number;
   }
 
 
-type WordCheck = {
-    vidas_restantes: any;
+interface WordCheck extends Word {
+    vidas_restantes?: number;
 }
   
+type Esc_state = {
+    palabra?:string,
+    vidas_restantes?:number
 
-class Escribo extends IGame {
+}
 
-    constructor(props:any){
+
+class Escribo extends IGame<Esc_state> {
+
+    constructor(props:Gen_prop){
         super(props);
         // buscamos la palabra a validar
         this.newGame = this.newGame.bind(this);
@@ -27,9 +44,9 @@ class Escribo extends IGame {
     newGame() {
         request<Word>("http://localhost:9000/v0/ortografia/"+this.props.jugador_id).then(m => {
 
-            let _palabra = m.data;
-            this.setState({palabra:_palabra['word']});
-            this.setState({vidas_restantes:_palabra['available_life']});
+            let _palabra:data = m.data;
+            this.setState({data:{palabra:_palabra['word'],
+                                 vidas_restantes:_palabra['available_life']}});
 
         })
     }
@@ -38,16 +55,14 @@ class Escribo extends IGame {
     checkWord(opcion: any) {
         console.log(opcion);
         request<WordCheck>("http://localhost:9000/v0/ortografia/"+this.props.jugador_id+"/"+opcion.toString()).then(oc => {
-            
-            if (oc.data.success) {
-            
-                alert("Correcto! Has ganado! Se iniciará una nueva partida.");
-                this.newGame();
+            console.log(oc);
+            if (oc.success) {
+                this.setState({win_game:true});
             
             } else {
             
                 alert("Incorrecto!");
-                this.setState({vidas_restantes:oc.data['available_life']});
+                this.setState({data:{vidas_restantes:oc.data['available_life']}});
 
                 if (oc.data['available_life']==0){
                     alert("Has perdido!");

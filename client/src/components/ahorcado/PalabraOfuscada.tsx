@@ -1,9 +1,14 @@
 import React from 'react'
+import Gen_prop from '../types/gen_prop';
+import IGame_state from '../types/igame_state';
 
+interface PalOfs_state {
+    word_len:Number
+  }
 
-class PalabraOfuscada extends React.Component {
+class PalabraOfuscada extends React.Component<Gen_prop,PalOfs_state> {
     private word_left:number=0;
-    constructor(props:any){
+    constructor(props:Gen_prop){
         super(props);
         this.state = {
             word_len: 0

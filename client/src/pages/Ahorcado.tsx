@@ -1,11 +1,9 @@
-import IGame from "../components/IGame.tsx";
+import IGame from "../components/IGame";
 
-import Figura from '../components/ahorcado/Figura.tsx';
-import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada.tsx';
-import LetrasErroneas from '../components/ahorcado/LetrasErroneas.tsx';
-import React from "react";
-import { message } from '../../../server/src/constants/messages/index';
-
+import Figura from '../components/ahorcado/Figura';
+import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada';
+import LetrasErroneas from '../components/ahorcado/LetrasErroneas';
+import React, { ReactNode } from "react";
 
 class Ahorcado extends IGame {
     private pal_ofsc:any = null;
@@ -29,7 +27,7 @@ class Ahorcado extends IGame {
         window.removeEventListener('keydown',this.handleKeydown);
     }
 
-    handleKeydown = event => {
+    handleKeydown = (event: { key: any; keyCode: number; }) => {
         const { key, keyCode } = event;
         if ( keyCode >= 65 && keyCode <= 90) {
             let mi_letter:string = key.toLowerCase();
@@ -86,7 +84,7 @@ class Ahorcado extends IGame {
                             
                             <Figura ref={this.figura} />
                             
-                            <PalabraOfuscada ref={this.pal_ofsc} jugador_id={this.props.jugador_id} />
+                            <PalabraOfuscada ref={this.pal_ofsc} jugador_id={this.props.jugador_id} id_game={this.props.id_game} app={this.props.app} />
                             <LetrasErroneas ref={this.letras_err} />
                             
                         </div>

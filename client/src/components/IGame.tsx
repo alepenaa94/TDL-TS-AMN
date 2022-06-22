@@ -1,18 +1,23 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import Popup from './Popup.tsx';
+import Popup from './Popup';
+import Gen_prop from './types/gen_prop';
+import gen_state from './types/gen_state';
+import IGame_state from './types/igame_state';
 
 
-abstract class IGame extends React.Component {
+abstract class IGame<T> extends React.Component<Gen_prop,IGame_state<T>> {
     private pop_end:any = null;
     private pop_win:any = null;
     
-    constructor(props:any) {
+    constructor(props:Gen_prop) {
         super(props);
-        this.state = {
+        let _state = {
             end_game: false,
+            win_game:false,
             login: false
         }
+        this.setState(_state);
         this.pop_end = React.createRef();
         this.pop_win = React.createRef();
     }
