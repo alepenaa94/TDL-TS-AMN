@@ -11797,3 +11797,9 @@ white-space: pre-line;
     margin-right: 50px;
   }
 }
+
+/* Rankings */
+.rankings {
+  text-align: center;
+  margin: 30px 0;
+}

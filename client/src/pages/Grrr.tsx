@@ -2,6 +2,7 @@ import IGame from "../components/IGame.tsx";
 import { ReactNode } from "react";
 import Button from 'react-bootstrap/Button';
 import request from '../functions/request.tsx';
+import Rankings from "../components/Rankings.tsx";
 import {Howl} from 'howler';
 import Sound1 from "../sounds/animals/1.wav";
 import Sound2 from "../sounds/animals/2.wav";
@@ -119,6 +120,7 @@ export default class Grrr extends IGame {
 
                     </div>
                 </section>
+                <Rankings />
             </div>
         );
     }

@@ -3,7 +3,6 @@ import { Navigate } from "react-router-dom";
 
 class Popup extends React.Component {
 
-
     constructor(props) {
         super(props);
         this.state = {

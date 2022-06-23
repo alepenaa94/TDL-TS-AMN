@@ -1,5 +1,6 @@
 import IGame from "../components/IGame.tsx";
 import request from "../functions/request.tsx";
+import Rankings from "../components/Rankings.tsx";
 import React from "react";
 import { ReactNode } from "react";
 import Button from 'react-bootstrap/Button';
@@ -61,6 +62,7 @@ export default class Mates extends IGame {
 
                     </div>
                 </section>
+                <Rankings />
             </div>
         );
     }

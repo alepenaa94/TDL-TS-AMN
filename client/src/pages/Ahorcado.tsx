@@ -2,9 +2,10 @@ import IGame from "../components/IGame.tsx";
 import Figura from '../components/ahorcado/Figura.tsx';
 import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada.tsx';
 import LetrasErroneas from '../components/ahorcado/LetrasErroneas.tsx';
+import Rankings from "../components/Rankings.tsx";
 import React from "react";
 
-class Ahorcado extends IGame {
+export default class Ahorcado extends IGame {
     private pal_ofsc:any = null;
     private letras_err:any = null;
     private figura:any = null;
@@ -90,10 +91,9 @@ class Ahorcado extends IGame {
                         
     
                     </section>
+                    <Rankings />
                 </div>
             </div>
         )
     }
 }
-
-export default Ahorcado; 
