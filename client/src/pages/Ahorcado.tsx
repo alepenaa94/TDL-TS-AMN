@@ -55,14 +55,14 @@ export default class Ahorcado extends IGame {
                         if (this.pal_ofsc.current.getWordLeft()==0){
                             fetch("http://localhost:9000/v0/rank/"+
                                   this.props.id_game+"/"+this.props.jugador_id);
-                            this.setState({win_game:true});
+                            super.setState({win_game:true});
                         }
                     }
                     else {
                         alert(data.data.message);
                         this.figura.current.show_more();
                         if (data.data.available_life==0) {
-                            this.setState({end_game:true});
+                            super.setState({end_game:true});
                         }else {
                             this.letras_err.current.addLetraErr(mi_letter);
                         }
