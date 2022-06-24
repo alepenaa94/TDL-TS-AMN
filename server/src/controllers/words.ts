@@ -1,23 +1,18 @@
-import { Response } from 'express'
-
-import Helper, { CUserAuthInfoRequest } from '../db_pool/helper'
+import { Request, Response } from 'express'
 import { ResponseWrapper } from '../helpers/response_wrapper'
 import { WordService } from '../services'
 
-export class WordsController {
-  public static async wordIsOK(req: CUserAuthInfoRequest, res: Response) {
-    const objSysAdmin = req.cUser ? req.cUser : Helper.defaultUser()
-    const wordService: WordService = new WordService(objSysAdmin)
+export const WordsController = {
+  wordIsOK: async (req: Request, res: Response) => {
+    const wordService: WordService = new WordService()
     const response: ResponseWrapper = new ResponseWrapper(res)
     const id_player = parseInt(req.params.id_player)
     const letter = req.params.letter
     return response.ok(await wordService.wordIsOK(id_player, letter))
-  }
-
-  public static async getWord(req: CUserAuthInfoRequest, res: Response) {
-    const objSysAdmin = req.cUser ? req.cUser : Helper.defaultUser()
-    const wordService: WordService = new WordService(objSysAdmin)
+  },
+  getWord: async (req: Request, res: Response) => {
+    const wordService: WordService = new WordService()
     const response: ResponseWrapper = new ResponseWrapper(res)
     return response.ok(await wordService.getWord(parseInt(req.params.id_player)))
-  }
+  },
 }

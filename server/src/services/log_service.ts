@@ -15,10 +15,6 @@ import { CommonService } from './common_service'
 export class LogService extends CommonService {
   public _person_type: string
 
-  constructor(_user: any) {
-    super(_user)
-  }
-
   public async addLog(log: Log) {
     console.log(log)
     /*

@@ -16,4 +16,5 @@ CREATE TABLE public.error_log(
 	CONSTRAINT pk_error_log PRIMARY KEY (id) 
 	)
 	COMMENT ON TABLE public.error_log
-		IS 'Errors logged include system-level and event violations (for example, attempting to test the wrong unit on a given fixture), etc, but excluding sensor test results and outcomes (pass/fail).The data included when an error occurs depends on when it occurs. For example, a script error when booting the API server will only have the database update script identifier (id_dbu_script). In contrast, a query or application error that occurs during an impact test will have data for all COLUMNs.'
+		IS 'Errors logged include system-level and event violations (for example, attempting to test the wrong unit on a given fixture), etc, but excluding sensor test results and outcomes (pass/fail).
+The data included when an error occurs depends on when it occurs. For example, a script error when booting the API server will only have the database update script identifier (id_dbu_script). In contrast, a query or application error that occurs during an impact test will have data for all COLUMNs.'

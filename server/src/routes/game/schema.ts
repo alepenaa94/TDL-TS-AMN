@@ -2,7 +2,7 @@
  * @openapi
  * components:
  *   schemas:
- * 
+ *
  *     version:
  *        type: object
  *        properties:

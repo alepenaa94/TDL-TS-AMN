@@ -25,55 +25,47 @@ const app = express()
 const http = require('http')
 
 async function main() {
-	/**
-	 * HTTP and console logging middleware using winston package
-	 */
-	app.use(initRequest)
-	app.use(logResponse)
+  /**
+   * HTTP and console logging middleware using winston package
+   */
+  app.use(initRequest)
+  app.use(logResponse)
 
-	app.use(express.urlencoded({ extended: true }))
-	app.use(express.json({ limit: '1.5MB' }))
-	app.use(CORS.handle)
+  app.use(express.urlencoded({ extended: true }))
+  app.use(express.json({ limit: '1.5MB' }))
+  app.use(CORS.handle)
 
-	// Set versions info
-	app.set('apiVersion', ver.apiVersion.version)
-	app.set('apiCommit', ver.apiVersion.commitshort)
-	app.set('apiVerMajor', ver.apiVersion.apiVerMajor)
-	app.set('apiVerMinor', ver.apiVersion.apiVerMinor)
-	app.set('apiVerPatch', ver.apiVersion.apiVerPatch)
-	app.set('apiVerBuild', ver.apiVersion.apiVerBuild)
+  // Set versions info
+  app.set('apiVersion', ver.apiVersion.version)
+  app.set('apiCommit', ver.apiVersion.commitshort)
+  app.set('apiVerMajor', ver.apiVersion.apiVerMajor)
+  app.set('apiVerMinor', ver.apiVersion.apiVerMinor)
+  app.set('apiVerPatch', ver.apiVersion.apiVerPatch)
+  app.set('apiVerBuild', ver.apiVersion.apiVerBuild)
 
-	// set token experiation and secret
-	app.set('tokenSecret', config.server.apiUuid) // secret variable used for Jwt encoding
-	app.set('tokenExpire', config.server.tokenExpiration)
+  // set dbpool
+  const pool = new PGPool(config.dbObj)
+  app.set('dbPool', pool)
+  await DBSchema.handle(main, pool, config.dbObj)
 
-	// set dbpool
-	const pool = new PGPool(config.dbObj)
-	app.set('dbPool', pool)
-	await DBSchema.handle(main, pool, config.dbObj)
+  // set versions
+  app.use('/v0', routes)
+  app.use('*', notFoundHandler)
 
-	// set versions
-	app.use('/v0', routes)
-	app.use('*', notFoundHandler)
-
-	// create server
-	const server = http.createServer(app)
-	const port = config.server.port || 5002
-	server.listen(port, (_error: any) => {
-		if (_error) {
-			return console.error('Error: ', _error)
-		}
-		logger.info(`Website API Server is running`)
-		logger.info(`Connected with Database: ${config.dbObj.database} and host: ${config.dbObj.host} as user: ${config.dbObj.user}`)
-		console.log(
-			'\x1b[33m%s\x1b[0m',
-			`Server :: Running @ 'http://localhost:${port}'`,
-		)
-		return console.log(
-			'\x1b[33m%s\x1b[0m',
-			`Swagger :: Running @ 'http://localhost:${port}/swagger'`,
-		)
-	})
+  // create server
+  const server = http.createServer(app)
+  const port = config.server.port || 5002
+  server.listen(port, (_error: any) => {
+    if (_error) {
+      return console.error('Error: ', _error)
+    }
+    logger.info(`Website API Server is running`)
+    logger.info(
+      `Connected with Database: ${config.dbObj.database} and host: ${config.dbObj.host} as user: ${config.dbObj.user}`,
+    )
+    console.log('\x1b[33m%s\x1b[0m', `Server :: Running @ 'http://localhost:${port}'`)
+    return console.log('\x1b[33m%s\x1b[0m', `Swagger :: Running @ 'http://localhost:${port}/swagger'`)
+  })
 }
 
 main()

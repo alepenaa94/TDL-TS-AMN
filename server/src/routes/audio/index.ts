@@ -9,9 +9,9 @@ import { AudioController } from '../../controllers'
 const router = express.Router()
 
 //Consulta si el animal esta ok o no
-router.get('/:id_player/:result', wrapper(AudioController.isAudioOK))
+router.get('/:id_player/:result', wrapper(AudioController.checkAnswer))
 
 //obtener id para audio
-router.get('/:id_player', wrapper(AudioController.getAudio))
+router.get('/:id_player', wrapper(AudioController.getNew))
 
 export default router

@@ -34,11 +34,4 @@ export class ResponseWrapper {
     return this.handle(response, 200, 400)
   }
 
-  public unauthorized(response: responseObject): Response {
-    return this.handle(response, 200, 401)
-  }
-
-  public forbidden(response: responseObject): Response {
-    return this.handle(response, 200, 403)
-  }
 }

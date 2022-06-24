@@ -11,7 +11,6 @@ import path from 'path'
 import fs from 'fs'
 
 import Pool from './pg_pool'
-import Helper from './helper'
 import AutoSchema from './auto_schema'
 
 class Schema {
@@ -51,7 +50,7 @@ class Schema {
         const params: Array<any> | undefined = []
 
         try {
-          await pool.aquery(Helper.defaultUser(), scriptSQL, params)
+          await pool.aquery2(scriptSQL, params)
           main()
         } catch (error) {
           console.log(error)

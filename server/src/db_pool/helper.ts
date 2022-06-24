@@ -17,51 +17,36 @@
  */
 
 import PGPool from './pg_pool'
-import { User } from '../models'
 import * as config from '../../config'
 import { SQLStatementInsert, SQLStatementUpdate } from '../typings/interface'
 
-export { CUserAuthInfoRequest } from '../typings/interface'
-
 export class Helper {
-  public static getUser(user: User) {
-    const _user: User = new User()
-    Helper.shallowCopy(user, _user)
-    return _user
-  }
-
   public static pool() {
     return new PGPool(config.dbObj)
   }
 
-  public static defaultUser() {
-    const _user: User = new User()
-    _user.username = 'user_default'
-    return _user
-  }
-
-  public static async beginTransaction(pool: PGPool, cUser: any) {
+  public static async beginTransaction(pool: PGPool) {
     const sql = 'BEGIN'
     try {
-      return await pool.aquery(cUser, sql, [])
+      return await pool.aquery2(sql, [])
     } catch (error) {
       throw error
     }
   }
 
-  public static async commitTransaction(pool: PGPool, cUser: any) {
+  public static async commitTransaction(pool: PGPool) {
     const sql = 'COMMIT'
     try {
-      return await pool.aquery(cUser, sql, [])
+      return await pool.aquery2(sql, [])
     } catch (error) {
       throw error
     }
   }
 
-  public static async rollbackTransaction(pool: PGPool, cUser: any) {
+  public static async rollbackTransaction(pool: PGPool) {
     const sql = 'ROLLBACK'
     try {
-      return await pool.aquery(cUser, sql, [])
+      return await pool.aquery2(sql, [])
     } catch (error) {
       throw error
     }

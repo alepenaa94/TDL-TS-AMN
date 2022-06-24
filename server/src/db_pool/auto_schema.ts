@@ -10,7 +10,6 @@
  */
 
 import fs from 'fs'
-import Helper from './helper'
 import PGPool from './pg_pool'
 import { logger } from '../providers/logger'
 
@@ -33,8 +32,8 @@ export default class AutoSchema {
     ORDER BY "script_name"`
 
     try {
-      const res = await pool.aquery(Helper.defaultUser(), sql, params)
-      const result = await pool.aquery(Helper.defaultUser(), successfulScriptsSql, params)
+      const res = await pool.aquery2(sql, params)
+      const result = await pool.aquery2(successfulScriptsSql, params)
       sql = ''
       params = []
 
@@ -71,7 +70,7 @@ export default class AutoSchema {
         sql = `INSERT INTO "database_updates" ("script_name", "script_sql", "id_dbupdate_status")
 					VALUES ${sql.replace(/\), $/, ')')}`
         try {
-          const insRes = await pool.aquery(Helper.defaultUser(), sql, params)
+          const insRes = await pool.aquery2(sql, params)
           return `${insRes.command} affected ${insRes.rowCount} record${insRes.rowCount > 1 ? 's' : ''}`
         } catch (err) {
           err.text = err.toString()
@@ -94,7 +93,7 @@ export default class AutoSchema {
     const params: Array<any> = []
 
     try {
-      const res = await pool.aquery(Helper.defaultUser(), sql, params)
+      const res = await pool.aquery2(sql, params)
       if (res.rows[0].db_auto_schema_update) {
         logger.info(`${dbName}: All Automated Schema Updates (if any) completed successfully`)
         return `${dbName}: All Automated Schema Updates (if any) completed successfully`
@@ -134,9 +133,9 @@ export default class AutoSchema {
 
         const getComments = `SELECT obj_description(oid), * FROM pg_class WHERE relname='${table.table_name}'`
 
-        const result = await pool.aquery(Helper.defaultUser(), getTables, [])
-        const result1 = await pool.aquery(Helper.defaultUser(), getConstraints, [])
-        const result2 = await pool.aquery(Helper.defaultUser(), getComments, [])
+        const result = await pool.aquery2(getTables, [])
+        const result1 = await pool.aquery2(getConstraints, [])
+        const result2 = await pool.aquery2(getComments, [])
 
         const returnStatement =
           `CREATE TABLE public.${table.table_name}(
@@ -170,7 +169,7 @@ export default class AutoSchema {
     }
 
     try {
-      const res = await pool.aquery(Helper.defaultUser(), sql, [])
+      const res = await pool.aquery2(sql, [])
 
       res.rows.forEach(async (table: any) => {
         fs.writeFile(`../database/snapshots/${table.table_name}.sql`, await createTable(table), (err) => {

@@ -6,14 +6,6 @@ import Helper from '../db_pool/helper'
 import { logger } from '../providers/logger'
 
 export class WordService extends CommonService {
-  expReq?: any
-
-  expRes?: any
-
-  constructor(_user: any) {
-    super(_user)
-  }
-
   // Consulta letra correcta
   public async wordIsOK(id_player: number, letter: string, pool?: PGPool): Promise<any> {
     try {
@@ -60,17 +52,17 @@ export class WordService extends CommonService {
           pooldefinedLocally = true
           pool = Helper.pool()
           // begin transaction
-          await Helper.beginTransaction(pool, this.user_current)
+          await Helper.beginTransaction(pool)
         }
         const av_life = playerExists.data.result[0].available_life - 1
         console.log(av_life)
         const sql_gameinplay = 'UPDATE gameinplay SET available_life = $2 WHERE id_player = $1 AND id_game = 3'
-        const updatedGameInPlay = await pool.aquery(this.user_current, sql_gameinplay, [id_player, av_life])
+        const updatedGameInPlay = await pool.aquery2(sql_gameinplay, [id_player, av_life])
         if (updatedGameInPlay.rowCount <= 0) {
           throw { message: 'Error al actualizar las vidas', status: 400 }
         }
         // commit if there is a transaction
-        if (pooldefinedLocally) await Helper.commitTransaction(pool, this.user_current)
+        if (pooldefinedLocally) await Helper.commitTransaction(pool)
         return {
           success: false,
           data: { message: 'Letra no es correcta', available_life: av_life },
@@ -99,22 +91,22 @@ export class WordService extends CommonService {
         pooldefinedLocally = true
         pool = Helper.pool()
         // begin transaction
-        await Helper.beginTransaction(pool, this.user_current)
+        await Helper.beginTransaction(pool)
       }
       //Se actualiza la tabla de palabras asociada al jugador. Solo una por jugador.- En caso de existir, se sobreescribe
       const sql_wordsplayer =
         'INSERT INTO wordsplayer(id_player, id_word, retry) VALUES ($1, $2, 0) ON CONFLICT (id_player) DO UPDATE SET id_word = $2'
       const wordsplayerParams = [id_player, wordResult.data.result[0].id]
-      await pool.aquery(this.user_current, sql_wordsplayer, wordsplayerParams)
+      await pool.aquery2(sql_wordsplayer, wordsplayerParams)
 
       //Se actualiza la tabla de juego y vidas
       const sql_gameinplay =
         'INSERT INTO gameinplay(id_player, id_game, available_life) VALUES ($1, 3, 6) ' +
         'ON CONFLICT (id_player, id_game) DO UPDATE SET available_life = 6 returning id_player, id_game'
       const gameinplayParams = [id_player]
-      await pool.aquery(this.user_current, sql_gameinplay, gameinplayParams)
+      await pool.aquery2(sql_gameinplay, gameinplayParams)
       // commit if there is a transaction
-      if (pooldefinedLocally) await Helper.commitTransaction(pool, this.user_current)
+      if (pooldefinedLocally) await Helper.commitTransaction(pool)
 
       return {
         success: true,

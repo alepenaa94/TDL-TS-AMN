@@ -6,28 +6,20 @@ import Helper from '../db_pool/helper'
 import { logger } from '../providers/logger'
 
 export class PlayerService extends CommonService {
-  expReq?: any
-
-  expRes?: any
-
-  constructor(_user: any) {
-    super(_user)
-  }
-
   // add name to player
   public async addNameToPlayer(id: number, name: string): Promise<any> {
     const pool = Helper.pool()
 
     try {
-      await Helper.beginTransaction(pool, this.user_current)
+      await Helper.beginTransaction(pool)
 
       const player_columns = `name = '${name}'`
       const player_sql = `UPDATE player SET ${player_columns} WHERE id = '${id}'`
-      const res = await pool.aquery(this.user_current, player_sql, [])
+      const res = await pool.aquery2(player_sql, [])
 
       if (!res.rowCount) throw { message: 'Player does not exist', status: 404 }
 
-      await Helper.commitTransaction(pool, this.user_current)
+      await Helper.commitTransaction(pool)
 
       return { success: true, data: { message: 'Player updated' } }
     } catch (error) {
@@ -44,7 +36,7 @@ export class PlayerService extends CommonService {
       pooldefinedLocally = true
       pool = Helper.pool()
       // begin transaction
-      await Helper.beginTransaction(pool, this.user_current)
+      await Helper.beginTransaction(pool)
     }
 
     //si el id_player no se completa, se asocia por primera vez
@@ -52,17 +44,17 @@ export class PlayerService extends CommonService {
       try {
         // insert a default user without name in Player table
         const sql_user = `INSERT INTO player (name, score) VALUES ('TBD', 0) returning id`
-        const userResult = await pool.aquery(this.user_current, sql_user, [])
+        const userResult = await pool.aquery2(sql_user, [])
 
         // insert id_game and id_player into Gameinplay table.
         const sql_gameinplay =
           'INSERT INTO gameinplay(id_player, id_game, available_life) VALUES ($1, $2, 3) ' +
           'ON CONFLICT (id_player, id_game) DO UPDATE SET available_life = 3 returning id_player, id_game'
         const gameinplayParams = [userResult.rows[0].id, id_game]
-        const gameinplayResult = await pool.aquery(this.user_current, sql_gameinplay, gameinplayParams)
+        const gameinplayResult = await pool.aquery2(sql_gameinplay, gameinplayParams)
 
         // commit if there is a transaction
-        if (pooldefinedLocally) await Helper.commitTransaction(pool, this.user_current)
+        if (pooldefinedLocally) await Helper.commitTransaction(pool)
         return {
           success: true,
           data: {
@@ -83,10 +75,10 @@ export class PlayerService extends CommonService {
           'INSERT INTO gameinplay(id_player, id_game, available_life) VALUES ($1, $2, 3) ' +
           'ON CONFLICT (id_player, id_game) DO UPDATE SET available_life = 3 returning id_player, id_game'
         const gameinplayParams = [id_player, id_game]
-        const gameinplayResult = await pool.aquery(this.user_current, sql_gameinplay, gameinplayParams)
+        const gameinplayResult = await pool.aquery2(sql_gameinplay, gameinplayParams)
 
         // commit if there is a transaction
-        if (pooldefinedLocally) await Helper.commitTransaction(pool, this.user_current)
+        if (pooldefinedLocally) await Helper.commitTransaction(pool)
         return {
           success: true,
           data: {

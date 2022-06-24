@@ -6,14 +6,6 @@ import Helper from '../db_pool/helper'
 import { logger } from '../providers/logger'
 
 export class AudioService extends CommonService {
-  expReq?: any
-
-  expRes?: any
-
-  constructor(_user: any) {
-    super(_user)
-  }
-
   // Consulta ortografia correcta
   public async isAudioOK(id_player: number, result: string, pool?: PGPool): Promise<any> {
     try {
@@ -53,16 +45,16 @@ export class AudioService extends CommonService {
           pooldefinedLocally = true
           pool = Helper.pool()
           // begin transaction
-          await Helper.beginTransaction(pool, this.user_current)
+          await Helper.beginTransaction(pool)
         }
         const av_life = playerExists.data.result[0].available_life - 1
         const sql_gameinplay = 'UPDATE gameinplay SET available_life = $2 WHERE id_player = $1 AND id_game = 1'
-        const updatedGameInPlay = await pool.aquery(this.user_current, sql_gameinplay, [id_player, av_life])
+        const updatedGameInPlay = await pool.aquery2(sql_gameinplay, [id_player, av_life])
         if (updatedGameInPlay.rowCount <= 0) {
           throw { message: 'Error al actualizar las vidas', status: 400 }
         }
         // commit if there is a transaction
-        if (pooldefinedLocally) await Helper.commitTransaction(pool, this.user_current)
+        if (pooldefinedLocally) await Helper.commitTransaction(pool)
 
         return {
           success: false,
@@ -92,13 +84,13 @@ export class AudioService extends CommonService {
         pooldefinedLocally = true
         pool = Helper.pool()
         // begin transaction
-        await Helper.beginTransaction(pool, this.user_current)
+        await Helper.beginTransaction(pool)
       }
       //Se actualiza la tabla de palabras asociada al jugador. Solo una por jugador.- En caso de existir, se sobreescribe
       const sql_audioPlayer =
         'INSERT INTO audioplayer(id_player, id_audio) VALUES ($1, $2) ON CONFLICT (id_player) DO UPDATE SET id_audio = $2'
       const audioPlayerParams = [id_player, audioResult.data.result[0].id]
-      await pool.aquery(this.user_current, sql_audioPlayer, audioPlayerParams)
+      await pool.aquery2(sql_audioPlayer, audioPlayerParams)
 
       //Se actualiza la tabla de juego y vidas
       const sql_gameinplay =
@@ -106,10 +98,10 @@ export class AudioService extends CommonService {
         'ON CONFLICT (id_player, id_game) DO UPDATE SET available_life = 1 returning id_player, id_game'
       const gameinplayParams = [id_player]
 
-      await pool.aquery(this.user_current, sql_gameinplay, gameinplayParams)
+      await pool.aquery2(sql_gameinplay, gameinplayParams)
 
       // commit if there is a transaction
-      if (pooldefinedLocally) await Helper.commitTransaction(pool, this.user_current)
+      if (pooldefinedLocally) await Helper.commitTransaction(pool)
 
       return {
         success: true,

@@ -11,7 +11,6 @@
 'use strict'
 
 import pg from 'pg'
-import { User } from '../models'
 
 const types = pg.types
 const timestamp_OID = 1114
@@ -42,15 +41,12 @@ export default class PGPool {
     })
   }
 
-  query(cUser: User, sqlText: string, params: any[] = [], callback: Callback) {
-    if (!cUser) {
-      return callback(new Error('Database user not defined.'))
-    }
+  query(sqlText: string, params: any[] = [], callback: Callback) {
     this.pool.connect(function (err: Error, client: any, done: any) {
       if (err) {
         return callback(err)
       }
-      client.query(`SET SESSION postgres.username = '${cUser.username}'`, [], function (err: Error) {
+      client.query(`SET SESSION postgres.username = 'user_default'`, [], function (err: Error) {
         if (err) {
           done()
           return callback(err)
@@ -67,10 +63,10 @@ export default class PGPool {
     })
   }
 
-  async aquery(cUser: User, sqlText: string, params: any[] = []): Promise<pg.QueryResult<any>> {
+  async aquery2(sqlText: string, params: any[] = []): Promise<pg.QueryResult<any>> {
     const client = await this.pool.connect()
     try {
-      await client.query(`SET SESSION postgres.username = '${cUser.username}'`, [])
+      await client.query(`SET SESSION postgres.username = 'user_default'`, [])
       const result = await client.query(sqlText, params)
 
       return result

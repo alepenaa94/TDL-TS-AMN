@@ -28,6 +28,6 @@ const router = express.Router()
  *                data:
  *                  $ref: '#/components/schemas/version'
  */
-router.get('', wrapper(GameController.getGames))
+router.get('', wrapper(GameController.get))
 
 export default router

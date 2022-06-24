@@ -13,7 +13,6 @@
  *              - getBy()
  */
 
-import { User } from '../models'
 import Helper from '../db_pool/helper'
 import { logger } from '../providers/logger'
 import { NullableString } from '../typings/types'
@@ -24,19 +23,13 @@ export class CommonService {
 
   public type_obj: any
 
-  public user_current: User
-
-  constructor(_user: any) {
-    this.user_current = _user
-  }
-
   public async getRows(sql: string, params?: Array<any>) {
     const pool = Helper.pool()
     let result: any
 
     try {
-      if (params) result = await pool.aquery(this.user_current, sql, params)
-      else result = await pool.aquery(this.user_current, sql)
+      if (params) result = await pool.aquery2(sql, params)
+      else result = await pool.aquery2(sql)
       if (result.rowCount === 0) throw { message: messages.errors.notFound, status: 404 }
       return { success: true, data: { result: result.rows } }
     } catch (error) {
@@ -53,7 +46,7 @@ export class CommonService {
 
     const sql = `INSERT INTO ${this.type_name} (${columns}) VALUES (${param_ids}) returning id`
     try {
-      result = await pool.aquery(this.user_current, sql, params)
+      result = await pool.aquery2(sql, params)
       if (result.rowCount === 0) throw { message: messages.errors.insert, status: 400 }
       return { success: true, data: { result: messages.success.insert, id: result.rows[0].id } }
     } catch (error) {
@@ -72,7 +65,7 @@ export class CommonService {
     }
 
     try {
-      result = await pool.aquery(this.user_current, sql, params)
+      result = await pool.aquery2(sql, params)
       if (result.rowCount === 0) throw { message: messages.errors.insert, status: 400 }
       return { success: true, data: { result: messages.success.insert, ids: result.rows } }
     } catch (error) {
@@ -88,7 +81,7 @@ export class CommonService {
 
     const sql = `UPDATE ${this.type_name} SET ${columns} WHERE ${condition}`
     try {
-      result = await pool.aquery(this.user_current, sql, params)
+      result = await pool.aquery2(sql, params)
       if (result.rowCount === 0) throw { message: messages.errors.notFound, status: 404 }
       return { success: true, data: { result: messages.success.update } }
     } catch (error) {
