@@ -1,5 +1,5 @@
-import Games from './../components/home/Games.tsx';
-import About from './../components/home/About.tsx';
+import Games from './../components/home/Games';
+import About from './../components/home/About';
 
 export default function Home() {
 

@@ -130,3 +130,5 @@ class Grrr extends IGame<{}> {
         );
     }
 }
+
+export default Grrr; 

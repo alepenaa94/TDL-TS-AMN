@@ -8,9 +8,6 @@ import Gen_prop from "../components/types/gen_prop";
 import Rankings from "../components/Rankings";
 
 
-
-
-
 class Ahorcado extends IGame<{}> {
     private pal_ofsc:any = null;
     private letras_err:any = null;
@@ -108,3 +105,5 @@ class Ahorcado extends IGame<{}> {
         )
     }
 }
+
+export default Ahorcado; 

@@ -1,13 +1,15 @@
 import React from "react";
-import request from "../functions/request.tsx";
+import request from "../functions/request";
 import {ReactNode} from "react";
 
 type RankingsData = {   
-    result: [{
-        id: number,
-        name: string,
-        score: number,
-    }]
+    data : {
+        result: [{
+            id: number,
+            name: string,
+            score: number,
+        }]
+    }
 }
 
 export default class Rankings extends React.Component {

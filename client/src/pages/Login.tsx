@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router";
+import App from "../App";
 import Gen_prop from "../components/types/gen_prop";
 
 
@@ -10,7 +11,11 @@ type Login_state = {
     nombre:string
 }
 
-class Login extends React.Component<Gen_prop,Login_state> {
+type Login_props = {
+    app: App
+}
+
+class Login extends React.Component<Login_props,Login_state> {
 
 
     constructor(props:Gen_prop) {

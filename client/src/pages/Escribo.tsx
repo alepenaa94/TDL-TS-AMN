@@ -4,6 +4,7 @@ import React, { ReactNode } from "react";
 import Button from 'react-bootstrap/Button';
 import Gen_prop from "../components/types/gen_prop";
 import IGame_state from "../components/types/igame_state";
+import Rankings from "../components/Rankings";
 
 
 type data = {
@@ -41,7 +42,7 @@ class Escribo extends IGame<Esc_state> {
     }
 
     newGame() {
-        request<Word>("http://lwcalhost:9000/v0/ortografia/"+this.props.jugador_id).then(m => {
+        request<Word>("http://localhost:9000/v0/ortografia/"+this.props.jugador_id).then(m => {
 
             let _palabra:data|any = m.data;
             this.setState({data:{palabra:_palabra['word'],
@@ -53,7 +54,7 @@ class Escribo extends IGame<Esc_state> {
 
     checkWord(opcion: any) {
         console.log(opcion);
-        request<WordCheck>("http://lwcalhost:9000/v0/ortografia/"+this.props.jugador_id+"/"+opcion.toString()).then(wc => {
+        request<WordCheck>("http://localhost:9000/v0/ortografia/"+this.props.jugador_id+"/"+opcion.toString()).then(wc => {
             console.log(wc);
             if (wc.success) {
                 this.setState({win_game:true});
@@ -78,7 +79,7 @@ class Escribo extends IGame<Esc_state> {
 
     
     defaultRender(): ReactNode {
-        const rankings = new Rankings();
+        const rankings = new Rankings(this.props);
         return (
             <div className="container">
             <section className="page-section text-white mb-0">
@@ -111,3 +112,5 @@ class Escribo extends IGame<Esc_state> {
         )   
     }
 }
+
+export default Escribo; 

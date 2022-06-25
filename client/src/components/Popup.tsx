@@ -14,12 +14,8 @@ interface Popup_props {
 
 class Popup extends React.Component<Popup_props,Popup_state> {
 
-<<<<<<< HEAD
-    constructor(props) {
-=======
 
     constructor(props:Popup_props) {
->>>>>>> front
         super(props);
         this.state = {
             show_p: false,
