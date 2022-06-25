@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import request from '../functions/request';
 import Popup from './Popup';
 import Gen_prop from './types/gen_prop';
 import gen_state from './types/gen_state';
@@ -34,6 +35,24 @@ abstract class IGame<T> extends React.Component<Gen_prop,IGame_state<T>> {
     }
 
     setWin() {
+        request<any>("http://localhost:9000/v0/rank/"+
+                    this.props.id_game+"/"+this.props.jugador_id, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+            })
+        })
+        .then((response:any) => {
+            if(!response.ok) {
+                console.log("asldkjlaksdn");
+                throw new Error(response.statusText);
+            }
+            else console.log("OK!!");
+        })
+        console.log("lalala");
         this.pop_win.current.showPopUp();
     }
 
