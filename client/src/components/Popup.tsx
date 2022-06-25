@@ -1,9 +1,25 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-class Popup extends React.Component {
+interface Popup_state {
+    show_p: boolean,
+    redirect: boolean
+}
 
+interface Popup_props {
+    wait: number,
+    path_r:string,
+    mensaje:string
+}
+
+class Popup extends React.Component<Popup_props,Popup_state> {
+
+<<<<<<< HEAD
     constructor(props) {
+=======
+
+    constructor(props:Popup_props) {
+>>>>>>> front
         super(props);
         this.state = {
             show_p: false,

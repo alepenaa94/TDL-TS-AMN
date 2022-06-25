@@ -1,33 +1,44 @@
-import IGame from "../components/IGame.tsx";
-import Figura from '../components/ahorcado/Figura.tsx';
-import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada.tsx';
-import LetrasErroneas from '../components/ahorcado/LetrasErroneas.tsx';
-import Rankings from "../components/Rankings.tsx";
-import React from "react";
+import IGame from "../components/IGame";
 
-export default class Ahorcado extends IGame {
+import Figura from '../components/ahorcado/Figura';
+import PalabraOfuscada from '../components/ahorcado/PalabraOfuscada';
+import LetrasErroneas from '../components/ahorcado/LetrasErroneas';
+import React, { ReactNode } from "react";
+import Gen_prop from "../components/types/gen_prop";
+import Rankings from "../components/Rankings";
+
+
+
+
+
+class Ahorcado extends IGame<{}> {
     private pal_ofsc:any = null;
     private letras_err:any = null;
     private figura:any = null;
     private letras_cargadas:Array<string> = [];
 
-    constructor(props:any) {
-
+    constructor(props:Gen_prop) {
         super(props);
         this.pal_ofsc = React.createRef();
         this.figura = React.createRef();
         this.letras_err = React.createRef();
 
-        window.addEventListener('keydown',this.handleKeydown);
+        
         
     }
+
+    didMount():void {
+        console.log("hola");
+        window.addEventListener('keydown',this.handleKeydown);
+    }
+    
 
 
     componentWillUnmount() {
         window.removeEventListener('keydown',this.handleKeydown);
     }
 
-    handleKeydown = event => {
+    handleKeydown = (event: { key: any; keyCode: number; }) => {
         const { key, keyCode } = event;
         if ( keyCode >= 65 && keyCode <= 90) {
             let mi_letter:string = key.toLowerCase();
@@ -84,7 +95,7 @@ export default class Ahorcado extends IGame {
                             
                             <Figura ref={this.figura} />
                             
-                            <PalabraOfuscada ref={this.pal_ofsc} jugador_id={this.props.jugador_id} />
+                            <PalabraOfuscada ref={this.pal_ofsc} jugador_id={this.props.jugador_id} id_game={this.props.id_game} app={this.props.app} />
                             <LetrasErroneas ref={this.letras_err} />
                             
                         </div>

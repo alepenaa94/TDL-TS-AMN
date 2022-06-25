@@ -1,25 +1,30 @@
-import IGame from "../components/IGame.tsx";
-import { ReactNode } from "react";
+import IGame from "../components/IGame";
 import Button from 'react-bootstrap/Button';
-import request from '../functions/request.tsx';
-import Rankings from "../components/Rankings.tsx";
-import {Howl} from 'howler';
+import request from '../functions/request';
+import {Howl, Howler} from 'howler';
 import Sound1 from "../sounds/animals/1.wav";
 import Sound2 from "../sounds/animals/2.wav";
 import Sound3 from "../sounds/animals/3.wav";
 import Sound4 from "../sounds/animals/4.wav";
+import Gen_prop from "../components/types/gen_prop";
+import { ReactNode } from "react";
+import Rankings from "../components/Rankings";
 
-type AnimalSound = {   
-    audio_id: string;
-    available_lifes: number;
+type AnimalSound = {
+    data: {
+        audio_id: string,
+        available_life: number,
+        message:any
+    }
 }
 
-export default class Grrr extends IGame {
+class Grrr extends IGame<{}> {
 
-    private sound: Howl;
-    private sound_map: {[key: string]: number};
+    //TODO: arreglar 
+    private sound: Howl | any;
+    private sound_map: { [key: string]: number; } | any;
 
-    constructor(props:any){
+    constructor(props:Gen_prop){
         super(props);
         this.answer = this.answer.bind(this);
         this.loadSoundMap();
@@ -50,7 +55,7 @@ export default class Grrr extends IGame {
         request<AnimalSound>("http://localhost:9000/v0/audio/"+this.props.jugador_id).then(a => {
 
             let animal = a.data;
-            let vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
+            let vidas_restantes:any = document.getElementById('vidas-restantes') as HTMLInputElement | null;
 
             if (vidas_restantes != null) {
                 vidas_restantes.innerHTML = animal['available_life'];

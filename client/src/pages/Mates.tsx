@@ -1,22 +1,28 @@
-import IGame from "../components/IGame.tsx";
-import request from "../functions/request.tsx";
-import Rankings from "../components/Rankings.tsx";
-import React from "react";
-import { ReactNode } from "react";
+import IGame from "../components/IGame";
+import request from "../functions/request";
+import React, { ReactNode } from "react";
 import Button from 'react-bootstrap/Button';
+import Rankings from "../components/Rankings";
 
 type Operando = {
-  operando1: number;
-  operando2: number;
-  resultado: number;
-  vidas_restantes: number;
+    data: {
+        operando1: number,
+        operando2: number,
+        resultado: number,
+        vidas_restantes: number,
+        available_life:number
+    }
 }
 
 type OperandoCheck = {
-    vidas_restantes: number;
+    success:boolean
+    data: {
+        vidas_restantes: number,
+        available_life:number
+    }
 }
 
-export default class Mates extends IGame {
+export default class Mates extends IGame<{}> {
 
     constructor(props: any) {
         super(props);
@@ -71,10 +77,10 @@ export default class Mates extends IGame {
         request<Operando>("http://localhost:9000/v0/math/"+this.props.jugador_id).then(m => {
 
             let mates = m.data;
-            let operando1 = document.getElementById('operando-numero-1') as HTMLInputElement | null;
-            let operando2 = document.getElementById('operando-numero-2') as HTMLInputElement | null;
-            let resultado = document.getElementById('operando-resultado') as HTMLInputElement | null;
-            let vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
+            let operando1:any = document.getElementById('operando-numero-1') as HTMLInputElement | null;
+            let operando2:any = document.getElementById('operando-numero-2') as HTMLInputElement | null;
+            let resultado:any = document.getElementById('operando-resultado') as HTMLInputElement | null;
+            let vidas_restantes:any = document.getElementById('vidas-restantes') as HTMLInputElement | null;
 
             if (operando1 != null) {
                 operando1.innerHTML = mates['operando1'];
@@ -119,7 +125,7 @@ export default class Mates extends IGame {
 
                 } else {
 
-                    let vidas_restantes = document.getElementById('vidas-restantes') as HTMLInputElement | null;
+                    let vidas_restantes:any = document.getElementById('vidas-restantes') as HTMLInputElement | null;
         
                     if (vidas_restantes != null) {
                         vidas_restantes.innerHTML = data.data["available_life"];

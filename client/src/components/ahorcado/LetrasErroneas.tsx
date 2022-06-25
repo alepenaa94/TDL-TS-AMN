@@ -1,9 +1,15 @@
 
 import React from 'react'
-class LetrasErroneas extends React.Component{
+import Gen_prop from '../types/gen_prop';
+
+interface LetrasErr_state {
+  _array:Array<string>
+}
+
+class LetrasErroneas extends React.Component<{},LetrasErr_state>{
 
     
-    constructor(props) {
+    constructor(props: {}) {
         super(props);
         this.state = {
             _array : []

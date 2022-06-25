@@ -1,20 +1,35 @@
 import React from "react";
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
-import Header from "./components/Header.tsx";
-import Home from "./pages/Home.tsx";
-import Ahorcado from "./pages/Ahorcado.tsx";
-import Grrr from "./pages/Grrr.tsx";
-import Mates from "./pages/Mates.tsx";
-import Escribo from "./pages/Escribo.tsx";
-import Error404 from "./pages/Error404.tsx";
-import Footer from "./components/Footer.tsx";
-import Login from "./pages/Login.tsx";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Ahorcado from "./pages/Ahorcado";
+import Grrr from "./pages/Grrr";
+import Mates from "./pages/Mates";
+import Escribo from "./pages/Escribo";
+import Error404 from "./pages/Error404";
+import Footer from "./components/Footer";
+import Login from "./pages/Login";
 
-class App extends React.Component {
+
+
+interface App_state {
+  ahorcado_id: number,
+  grrr_id: number,
+  mates_id: number,
+  escribo_id: number,
+  jugador_id: number,
+
+  show_p: boolean,
+  last_path:string
+}
+
+
+
+class App extends React.Component<{},App_state> {
 
   private ref_popup:any = null;
   
-  constructor(props:any) {
+  constructor(props: {} | Readonly<{}>) {
     super(props);
     
     this.ref_popup = React.createRef();
@@ -38,7 +53,7 @@ class App extends React.Component {
   componentDidMount(): void {
     fetch("http://localhost:9000/v0/games")
     .then((response) => {
-      if(!response.ok) throw new Error(response.status);
+      if(!response.ok) throw new Error(response.statusText);
       else return response.json();
     })
     .then(data => {
@@ -94,7 +109,7 @@ class App extends React.Component {
           })
       })
       .then((response) => {
-          if(!response.ok) throw new Error(response.status);
+          if(!response.ok) throw new Error(response.statusText);
           else return response.json();
         })
       .then(data => {
