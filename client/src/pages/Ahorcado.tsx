@@ -61,8 +61,6 @@ class Ahorcado extends IGame<{}> {
                         // ofuscada.. si es asi mandamos al back fin de juego
                         // y lo mandamos a la pagina ganador.
                         if (this.pal_ofsc.current.getWordLeft()==0){
-                            fetch("http://localhost:9000/v0/rank/"+
-                                  this.props.id_game+"/"+this.props.jugador_id);
                             super.setState({win_game:true});
                         }
                     }
