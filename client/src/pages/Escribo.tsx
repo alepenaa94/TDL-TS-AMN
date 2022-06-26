@@ -103,6 +103,7 @@ class Escribo extends IGame<Esc_state> {
                     </div>
                 </div>
             </section>
+            <Rankings />
         </div>
         )   
     }
