@@ -1,6 +1,6 @@
 import IGame from "../components/IGame";
 import request from "../functions/request";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import Button from 'react-bootstrap/Button';
 import Rankings from "../components/Rankings";
 
@@ -10,24 +10,26 @@ type Operando = {
         operando2: number,
         resultado: number,
         vidas_restantes: number,
-        available_life:number
+        available_life: number
     }
 }
 
 type OperandoCheck = {
-    success:boolean
+    success: boolean
     data: {
         vidas_restantes: number,
-        available_life:number
+        available_life: number
     }
 }
 
 export default class Mates extends IGame<{}> {
 
     constructor(props: any) {
+
         super(props);
         this.answer = this.answer.bind(this);
         this.newGame();
+        
     }
 
     defaultRender(): ReactNode {
