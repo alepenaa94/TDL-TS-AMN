@@ -62,7 +62,7 @@ export default class Mates extends IGame<{}> {
                         <div className="row operandos-box">
                             <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-suma" onClick={e => this.answer(e, '+')}>+</Button></div>
                             <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-resta" onClick={e => this.answer(e, '-')}>—</Button></div>
-                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-multiplicacion" onClick={e => this.answer(e, '*')}>x</Button></div>
+                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-multiplicacion" onClick={e => this.answer(e, 'x')}>x</Button></div>
                             <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 operando-box text-center"><Button variant="primary operando" id="operando-division" onClick={e => this.answer(e, '/')}>/</Button></div>
                         </div>
 
@@ -107,7 +107,6 @@ export default class Mates extends IGame<{}> {
     }
 
     checkOperator(operator_client: string) {
-
         request<OperandoCheck>("http://localhost:9000/v0/math/"+this.props.jugador_id, {
             method: 'POST',
             headers: {

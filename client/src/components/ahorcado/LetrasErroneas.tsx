@@ -31,7 +31,7 @@ class LetrasErroneas extends React.Component<{},LetrasErr_state>{
     render(): React.ReactNode {
         return (
             <div className="wrong-letters-container">
-                {this.state._array.length > 0 ? <p>Wrong</p> : null}
+                {this.state._array.length > 0 ? <p>Letras incorrectas</p> : null}
                 
                 {this.state._array.map((letra)=>{
                     return (<span className='letter'>{letra}</span>)

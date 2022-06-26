@@ -109,8 +109,8 @@ class Grrr extends IGame<{}> {
                             </div>
                         </div>
                         <div className="d-flex flex-wrap justify-content-center animales-box">
-                            <div className="p-2 animal-box"><Button variant="secondary" id="animal-play" onClick={() => this.SoundPlay()}>Play</Button></div>
-                            <div className="p-2 animal-box"><Button variant="secondary" id="animal-stop" onClick={() => this.SoundStop()}>Stop</Button></div>
+                            <div className="p-2 animal-box"><Button variant="secondary" id="animal-play" onClick={() => this.SoundPlay()}>Reproducir</Button></div>
+                            <div className="p-2 animal-box"><Button variant="secondary" id="animal-stop" onClick={() => this.SoundStop()}>Parar</Button></div>
                         </div>
                         <div className="d-flex flex-row-reverse">
                             <div className="p-2 vidas-restantes-box vidas-restantes-box-number" id="vidas-restantes">?</div>
