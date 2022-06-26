@@ -11620,7 +11620,7 @@ html {
   padding: 20px 30px;
   position: relative;
   margin: auto;
-  height: auto;
+  height: 500px;
   width: auto;
 }
 
@@ -11638,11 +11638,12 @@ html {
 .wrong-letters-container {
   background-color: #a52834;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 25px;
+  right: 35px;
   display: flex;
   flex-direction: column;
-  text-align: right;
+  text-align: center;
+  font-size: 28px;
 }
 
 .wrong-letters-container p {
@@ -11812,18 +11813,16 @@ white-space: pre-line;
 }
 
 .escribo-box {
-  white-space: pre-line;
-    font-size: 6rem;
+    font-size: 8rem;
     color: black;
-  
   }
 
 .escribo-btn {
   text-align: center;
   width: auto;
-  height: 180px;
-  margin: 5px;
-  font-size: 6rem;
+  height: 130px;
+  margin: 4px;
+  font-size: 4rem;
 }
 
 .me-6 {

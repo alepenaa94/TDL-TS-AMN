@@ -86,21 +86,16 @@ class Escribo extends IGame<Esc_state> {
                 <div className="container xl">
 
                     <h2 className="page-section-heading text-center text-uppercase mb-0 escribo-header">¿Qué tal la ortografía?</h2>
-
                     <div className="d-flex justify-content-center formula">
                         <div className="p-2">
                             <p className="escribo-box" id="palabra-escribo">{this.state.data?.palabra}</p>
                         </div>
                     </div>
                     <div className="center">
-                        <div className="row justify-content-center me-6">
-                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
-                                <Button variant="danger escribo-btn" onClick={e => this.checkWord('false')}>Mal</Button>
+                            <div className="d-flex flex-wrap justify-content-center">
+                                <div className="p-2 escribo-btn"><Button variant="danger escribo-btn" onClick={e => this.checkWord('false')}>incorrecta</Button></div>
+                                <div className="p-2 escribo-btn"><Button variant="primary escribo-btn" onClick={e => this.checkWord('true')}>correcta</Button></div>
                             </div>
-                            <div className="col col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
-                                <Button variant="primary escribo-btn" onClick={e => this.checkWord('true')}>Correcta</Button>
-                            </div>
-                        </div>
                     </div>
                     <div className="d-flex flex-row-reverse">
                         <div className="p-2 vidas-restantes-box" id="vidas-restantes">{this.state.data?.vidas_restantes}</div>
